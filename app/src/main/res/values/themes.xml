@@ -43,4 +43,10 @@
     <style name="Round12dp">
         <item name="cornerSize">12dp</item>
     </style>
+
+    <style name="MyDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="cornerRadius">16dp</item>
+        <item name="android:radius">16dp</item>
+        <item name="android:layout_margin">16dp</item>
+    </style>
 </resources>

@@ -8,7 +8,7 @@ import com.idance.hocnhayonline2023.R
 @BindingAdapter("thumb")
 fun setThumb(shapeableImageView: ShapeableImageView, thumb: String?) {
     if (thumb != null) {
-        Glide.with(shapeableImageView.context).load(thumb).error(R.drawable.background)
+        Glide.with(shapeableImageView.context).load(thumb).error(R.drawable.bg_round_8dp)
             .into(shapeableImageView)
     }
 }

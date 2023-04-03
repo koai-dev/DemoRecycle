@@ -1,13 +1,16 @@
 package com.idance.hocnhayonline2023.singleUnit
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
+import com.idance.hocnhayonline2023.R
 import com.idance.hocnhayonline2023.base.BaseFragment
 import com.idance.hocnhayonline2023.databinding.FragmentHomeBinding
 import com.idance.hocnhayonline2023.databinding.FragmentSingleUnitBinding
+import com.idance.hocnhayonline2023.databinding.MenuSortBinding
 import com.idance.hocnhayonline2023.home.adapter.MovieAdapter
 import com.idance.hocnhayonline2023.model.Movie
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,23 +39,64 @@ class SingleUnitFragment : BaseFragment() {
 
         setMovieAdapter()
         genData()
+        setClickListener()
     }
 
-    private fun setMovieAdapter(){
+    private fun setMovieAdapter() {
         movieAdapter = MovieAdapter(false)
         binding.rcvMovieSingle.adapter = movieAdapter
     }
 
-    private fun genData(){
+    private fun setClickListener() {
+        binding.btnSort.setOnClickListener {
+            val dialogBinding = MenuSortBinding.inflate(layoutInflater)
+            val dialog = Dialog(requireContext(), R.style.MyDialog)
+            dialog.setCanceledOnTouchOutside(true)
+            dialog.setContentView(dialogBinding.root)
+            dialog.show()
+        }
+    }
+
+    private fun genData() {
         val list = ArrayList<Movie>()
-        list.add(Movie("https://flypro.vn/photos/old_data/1471261197.jpg","Nhảy hiện đại"))
-        list.add(Movie("https://images.elipsport.vn/anh-seo-tin-tuc/2021/2/4/nhay-hien-dai-co-ban-1.jpg","Nhảy KPOP"))
-        list.add(Movie("https://unica.vn/upload/landingpage/2400124355_cac-dieu-nhay-hien-dai-duoc-gioi-tre-me-met-nhat-hien-nay_thumb.jpg","Nhảy sexy"))
-        list.add(Movie("https://inhat.vn/hcm/wp-content/uploads/2022/05/trung-t%C3%A2m-d%E1%BA%A1y-nh%E1%BA%A3y-kpop-%E1%BB%9F-tphcm-6-min.jpg","Lên nóc nhà"))
-        list.add(Movie("https://flypro.vn/photos/old_data/1471261197.jpg","Nhảy hiện đại"))
-        list.add(Movie("https://images.elipsport.vn/anh-seo-tin-tuc/2021/2/4/nhay-hien-dai-co-ban-1.jpg","Nhảy KPOP"))
-        list.add(Movie("https://unica.vn/upload/landingpage/2400124355_cac-dieu-nhay-hien-dai-duoc-gioi-tre-me-met-nhat-hien-nay_thumb.jpg","Nhảy sexy"))
-        list.add(Movie("https://inhat.vn/hcm/wp-content/uploads/2022/05/trung-t%C3%A2m-d%E1%BA%A1y-nh%E1%BA%A3y-kpop-%E1%BB%9F-tphcm-6-min.jpg","Lên nóc nhà"))
+        list.add(Movie("https://flypro.vn/photos/old_data/1471261197.jpg", "Nhảy hiện đại"))
+        list.add(
+            Movie(
+                "https://images.elipsport.vn/anh-seo-tin-tuc/2021/2/4/nhay-hien-dai-co-ban-1.jpg",
+                "Nhảy KPOP"
+            )
+        )
+        list.add(
+            Movie(
+                "https://unica.vn/upload/landingpage/2400124355_cac-dieu-nhay-hien-dai-duoc-gioi-tre-me-met-nhat-hien-nay_thumb.jpg",
+                "Nhảy sexy"
+            )
+        )
+        list.add(
+            Movie(
+                "https://inhat.vn/hcm/wp-content/uploads/2022/05/trung-t%C3%A2m-d%E1%BA%A1y-nh%E1%BA%A3y-kpop-%E1%BB%9F-tphcm-6-min.jpg",
+                "Lên nóc nhà"
+            )
+        )
+        list.add(Movie("https://flypro.vn/photos/old_data/1471261197.jpg", "Nhảy hiện đại"))
+        list.add(
+            Movie(
+                "https://images.elipsport.vn/anh-seo-tin-tuc/2021/2/4/nhay-hien-dai-co-ban-1.jpg",
+                "Nhảy KPOP"
+            )
+        )
+        list.add(
+            Movie(
+                "https://unica.vn/upload/landingpage/2400124355_cac-dieu-nhay-hien-dai-duoc-gioi-tre-me-met-nhat-hien-nay_thumb.jpg",
+                "Nhảy sexy"
+            )
+        )
+        list.add(
+            Movie(
+                "https://inhat.vn/hcm/wp-content/uploads/2022/05/trung-t%C3%A2m-d%E1%BA%A1y-nh%E1%BA%A3y-kpop-%E1%BB%9F-tphcm-6-min.jpg",
+                "Lên nóc nhà"
+            )
+        )
         movieAdapter.submitList(list)
     }
 }
