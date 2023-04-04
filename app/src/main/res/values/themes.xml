@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.MyApplication" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
@@ -24,12 +24,14 @@
         <item name="android:windowLightStatusBar">true</item>
 
         <!-- specify enter and exit transitions -->
-<!--        <item name="android:windowEnterTransition">@android:transition/explode</item>-->
-<!--        <item name="android:windowExitTransition">@android:transition/explode</item>-->
+        <!--        <item name="android:windowEnterTransition">@android:transition/explode</item>-->
+        <!--        <item name="android:windowExitTransition">@android:transition/explode</item>-->
         <item name="android:windowSharedElementEnterTransition">
-            @transition/change_image_transform</item>
+            @transition/change_image_transform
+        </item>
         <item name="android:windowSharedElementExitTransition">
-            @transition/change_image_transform</item>
+            @transition/change_image_transform
+        </item>
     </style>
 
     <style name="Round6dp">
@@ -48,5 +50,9 @@
         <item name="cornerRadius">16dp</item>
         <item name="android:radius">16dp</item>
         <item name="android:layout_margin">16dp</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
     </style>
 </resources>
