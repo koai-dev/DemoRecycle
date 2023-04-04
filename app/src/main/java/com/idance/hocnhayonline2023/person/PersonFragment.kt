@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.idance.hocnhayonline2023.base.BaseFragment
 import com.idance.hocnhayonline2023.databinding.FragmentHomeBinding
 import com.idance.hocnhayonline2023.databinding.FragmentPersonalBinding
@@ -31,4 +33,14 @@ class PersonFragment : BaseFragment() {
             insets.consumeSystemWindowInsets()
         }
     }
+
+    private fun setClickListener() {
+        binding.btnExit.setOnClickListener {
+
+        }
+
+        binding.btnManagerMember.setOnClickListener {
+        }
+    }
+
 }
