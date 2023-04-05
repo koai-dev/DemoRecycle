@@ -30,8 +30,8 @@ class PlayVideoActivity : BaseActivity() {
 
     private fun initPlayer() {
         player = ExoPlayer.Builder(this).build().also {
-            binding.videoView.player = player
-            val mediaItem = MediaItem.fromUri("https://www.youtube.com/watch?v=H5v3kku4y6Q")
+            binding.videoView.player = it
+            val mediaItem = MediaItem.fromUri("https://firebasestorage.googleapis.com/v0/b/testvideo-d2076.appspot.com/o/TH%C6%AF%C6%A0NG%20EM%20H%C6%A0N%20CH%C3%8DNH%20ANH%20%5BOFFICIAL%20MV%20FULL%5D%20-%20JUN%20PH%E1%BA%A0M.mp4?alt=media&token=9399a62f-4fbf-4a8c-8fd9-f23257eda5ee")
             it.setMediaItem(mediaItem)
             it.playWhenReady = playWhenReady
             it.seekTo(currentItem, playbackPosition)
