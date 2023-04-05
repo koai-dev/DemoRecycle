@@ -33,14 +33,21 @@
             android:value="44c67b539b0f980eb0a1bf8d454f1fd147a0b623" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".play.PlayVideoActivity"
             android:exported="true"
-            android:hardwareAccelerated="true">
+            android:hardwareAccelerated="true"
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:hardwareAccelerated="true">
+
         </activity>
     </application>
 
