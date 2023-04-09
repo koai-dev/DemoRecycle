@@ -8,7 +8,7 @@
 
         <variable
             name="user"
-            type="com.idance.hocnhayonline2023.model.User" />
+            type="com.idance.hocnhayonline.model.User" />
 
         <import type="android.view.View" />
     </data>

@@ -61,7 +61,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.idance.hocnhayonline2023.customView.RealtimeBlurView
+            <com.idance.hocnhayonline.customView.RealtimeBlurView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="fitXY"
@@ -73,7 +73,7 @@
                 app:realtimeBlurRadius="25dp"
                 app:realtimeOverlayColor="#01E5E5E5" />
 
-            <com.idance.hocnhayonline2023.customView.RealtimeBlurView
+            <com.idance.hocnhayonline.customView.RealtimeBlurView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="fitXY"

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager_main"
@@ -15,16 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.idance.hocnhayonline2023.customView.MoveImageView
-        android:id="@+id/btn_support"
-        android:layout_width="80dp"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_support"
-        app:layout_constraintBottom_toTopOf="@id/layout_bottom_tab"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <include
         android:id="@+id/layout_bottom_tab"
         layout="@layout/layout_bottom_main_super"
@@ -33,6 +22,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.idance.hocnhayonline.customView.MoveImageView
+        android:id="@+id/btn_support"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:adjustViewBounds="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_support"
+        app:layout_constraintBottom_toTopOf="@id/layout_bottom_tab"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
         android:id="@+id/main_container"

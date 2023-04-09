@@ -6,7 +6,7 @@
 
         <variable
             name="movie"
-            type="com.idance.hocnhayonline2023.model.Movie" />
+            type="com.idance.hocnhayonline.model.Movie" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

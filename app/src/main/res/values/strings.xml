@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">IDANCE</string>
+    <string name="facebook_app_id">5973343579368269</string>
+    <string name="fb_login_protocol_scheme">fb5973343579368269</string>
+    <string name="facebook_client_token">c65cb04cb3b1ab3d9f01297ff64819f7</string>
+
+    //app language
     <string name="kh_m_ph_theo"><b>Khám phá theo</b></string>
     <string name="txt_unit_last"><b>Bài học mới nhất</b></string>
     <string name="txt_lasted_course"><b>Khóa học mới nhất</b></string>
     <string name="txt_single_unit"><b>Danh sách bài học đơn lẻ</b></string>
+
+
+
 </resources>
