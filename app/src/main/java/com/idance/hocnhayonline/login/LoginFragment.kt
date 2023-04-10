@@ -38,6 +38,8 @@ class LoginFragment : BaseFragment() {
         binding.btnBack.setOnClickListener {
             (requireActivity() as MainActivity).onBackPressedDispatcher.onBackPressed()
         }
+        binding.layoutFacebookGoogle.ivLoginFb.setOnClickListener {
 
+        }
     }
 }
