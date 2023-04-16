@@ -9,7 +9,23 @@
     <string name="txt_unit_last"><b>Bài học mới nhất</b></string>
     <string name="txt_lasted_course"><b>Khóa học mới nhất</b></string>
     <string name="txt_single_unit"><b>Danh sách bài học đơn lẻ</b></string>
-
+    <string name="tab_person">Cá nhân</string>
+    <string name="tab_course">Khóa học</string>
+    <string name="tab_single">Bài đơn</string>
+    <string name="tab_home">Trang chủ</string>
+    <string name="dance_everywhere"><font color='#FF8F71'>Dance</font> Everywhere</string>
+    <string name="type_key_for_search">Nhập từ khóa tìm kiếm</string>
+    <string name="discover">Khám phá</string>
+    <string name="txt_forget_password">Quên mật khẩu?</string>
+    <string name="txt_register_now">Đăng ký ngay</string>
+    <string name="login">Đăng nhập</string>
+    <string name="register_new">Đăng Ký Mới</string>
+    <string name="register">Đăng ký</string>
+    <string name="type_email">Nhập Email</string>
+    <string name="name_login">Tên đăng nhập</string>
+    <string name="txt_accept_term">Bạn đồng ý với mọi <font color='#FF8F71'>điều khoản &amp; điều kiện</font> trong thỏa thuận người dùng của IDance.</string>
+    <string name="txt_welcome_to_idance">Chào mừng bạn đến với <font color='#FF8F71'>IDANCE</font></string>
+    <string name="cancel">Hủy bỏ</string>
 
 
 </resources>

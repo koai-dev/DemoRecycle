@@ -37,10 +37,13 @@ abstract class FaActivity : AppCompatActivity() {
 
     abstract fun initView(savedInstanceState: Bundle?, binding: ViewBinding)
 
-    fun openActivity(activity: Class<*>, canBack: Boolean) {
+    fun openActivity(activity: Class<*>, canBack: Boolean = true, bundle: Bundle? = null) {
         val intent = Intent(this, activity)
+        if (bundle != null) {
+            intent.putExtra("bundle", bundle)
+        }
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-        if (canBack) {
+        if (!canBack) {
             finish()
         }
     }

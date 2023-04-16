@@ -21,7 +21,7 @@
         <!-- enable window content transitions -->
         <item name="android:windowActivityTransitions">true</item>
 
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
 
         <!-- specify enter and exit transitions -->
         <!--        <item name="android:windowEnterTransition">@android:transition/explode</item>-->

@@ -10,14 +10,14 @@ import com.idance.hocnhayonline.community.CommunityFragment
 import com.idance.hocnhayonline.singleUnit.SingleUnitFragment
 
 class MainPagerAdapter(fm: FragmentActivity) : FragmentStateAdapter(fm) {
-    override fun getItemCount(): Int  = 5
+    override fun getItemCount(): Int  = 4
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
             0 -> HomeFragment()
             1 -> SingleUnitFragment()
-            2 -> CommunityFragment()
-            3 -> CourseFragment()
+//            2 -> CommunityFragment()
+            2 -> CourseFragment()
             else -> PersonFragment()
         }
     }

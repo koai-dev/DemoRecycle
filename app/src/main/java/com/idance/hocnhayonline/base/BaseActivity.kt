@@ -11,6 +11,5 @@ open class BaseActivity : FaActivity() {
 
     override fun initView(savedInstanceState: Bundle?, binding: ViewBinding) {
         MobileAds.initialize(this) {}
-
     }
 }

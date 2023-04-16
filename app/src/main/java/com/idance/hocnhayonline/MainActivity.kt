@@ -5,8 +5,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.idance.hocnhayonline.base.BaseActivity
@@ -24,17 +31,43 @@ class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainPagerAdapter: MainPagerAdapter
     var doubleBackToExitPressedOnce = false
+    lateinit var callbackManager: CallbackManager
+
 
     override fun getBindingView(): ViewBinding = ActivityMainBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?, binding: ViewBinding) {
         super.initView(savedInstanceState, binding)
         this.binding = binding as ActivityMainBinding
+        callbackManager = CallbackManager.Factory.create()
+
+        LoginManager.getInstance()
+            .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+                override fun onCancel() {
+                    Toast.makeText(this@MainActivity, "Đăng nhập bị hủy.", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onError(error: FacebookException) {
+                    Toast.makeText(this@MainActivity, "Lỗi đã xảy ra.", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onSuccess(result: LoginResult) {
+                    val accessToken = AccessToken.getCurrentAccessToken()
+                    if (accessToken != null && !accessToken.isExpired) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Đăng nhập thành công.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+            })
 
         setMainPager()
         setStateBar(0)
         setUpListener()
-
     }
 
     private fun setMainPager() {
@@ -61,11 +94,11 @@ class MainActivity : BaseActivity() {
         binding.layoutBottomTab.btnSingleUnit.setOnClickListener {
             binding.pagerMain.currentItem = 1
         }
-        binding.layoutBottomTab.btnShort.setOnClickListener {
-            binding.pagerMain.currentItem = 2
-        }
+//        binding.layoutBottomTab.btnShort.setOnClickListener {
+//            binding.pagerMain.currentItem = 2
+//        }
         binding.layoutBottomTab.btnCourse.setOnClickListener {
-            binding.pagerMain.currentItem = 3
+            binding.pagerMain.currentItem = 2
         }
         binding.layoutBottomTab.btnPersonalSuper.setOnClickListener {
             tabProfileClick()
@@ -86,7 +119,7 @@ class MainActivity : BaseActivity() {
 
         })
 
-        ApiController.getService().config().enqueue(object : Callback<Config>{
+        ApiController.getService().config().enqueue(object : Callback<Config> {
             override fun onResponse(call: Call<Config>, response: Response<Config>) {
                 print(response.body())
             }
@@ -113,13 +146,20 @@ class MainActivity : BaseActivity() {
             .commit()
     }
 
+    fun clearStack() {
+        val itemCount = supportFragmentManager.backStackEntryCount
+        for (item in 0 until itemCount) {
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+    }
+
     private fun setStateBar(index: Int) {
         binding.layoutBottomTab.btnHomeSuper.isSelected = index == 0
         binding.layoutBottomTab.btnSingleUnit.isSelected = index == 1
-        binding.layoutBottomTab.btnShort.isSelected = index == 2
-        binding.layoutBottomTab.btnCourse.isSelected = index == 3
-        binding.layoutBottomTab.btnPersonalSuper.isSelected = index == 4
-        if (index != 2) {
+//        binding.layoutBottomTab.btnShort.isSelected = index == 2
+        binding.layoutBottomTab.btnCourse.isSelected = index == 2
+        binding.layoutBottomTab.btnPersonalSuper.isSelected = index == 3
+        if (index != 3) {
             binding.btnSupport.visibility = View.VISIBLE
         } else {
             binding.btnSupport.visibility = View.GONE

@@ -5,19 +5,23 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
+import com.facebook.login.LoginManager
 import com.idance.hocnhayonline.MainActivity
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentLoginBinding
+import com.idance.hocnhayonline.signup.SignUpFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment() {
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var activity: MainActivity
     override fun getBindingView(): ViewBinding = FragmentLoginBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?, binding: ViewBinding) {
         super.initView(savedInstanceState, binding)
         this.binding = binding as FragmentLoginBinding
+        activity = requireActivity() as MainActivity
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val paramsTop =
                 binding.pointTop.layoutParams as ViewGroup.MarginLayoutParams
@@ -34,10 +38,19 @@ class LoginFragment : BaseFragment() {
         setClickListener()
     }
 
-    private fun setClickListener(){
+    private fun setClickListener() {
         binding.btnBack.setOnClickListener {
-            (requireActivity() as MainActivity).onBackPressedDispatcher.onBackPressed()
+            activity.onBackPressedDispatcher.onBackPressed()
         }
-
+        binding.btnRegister.setOnClickListener {
+            activity.addFragment(SignUpFragment())
+        }
+        binding.layoutFacebookGoogle.btnFacebook.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(
+                activity,
+                activity.callbackManager,
+                listOf("public_profile", "email")
+            )
+        }
     }
 }

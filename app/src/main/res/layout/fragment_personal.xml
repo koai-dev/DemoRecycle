@@ -8,7 +8,7 @@
 
         <variable
             name="user"
-            type="com.idance.hocnhayonline.model.User" />
+            type="com.koaidev.idancesdk.model.User" />
 
         <import type="android.view.View" />
     </data>
@@ -49,7 +49,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circleImageView"
-            img_avt="@{user.avatar??null}"
+            img_avt="@{user.imageUrl??null}"
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:layout_marginTop="18dp"
@@ -64,8 +64,8 @@
             android:id="@+id/textView24"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/circleImageView"
@@ -74,32 +74,31 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:ellipsize="end"
+                android:maxLength="25"
                 android:singleLine="true"
                 android:text="@{user.name, default=NguyenKimKhandssfdsffdsf}"
                 android:textColor="@color/white"
-                android:layout_gravity="center"
                 android:textFontWeight="700"
-                android:maxLength="25"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/bg_txt_admin_business"
                 android:paddingHorizontal="4dp"
                 android:paddingVertical="2dp"
-                android:text="Admin"
                 android:singleLine="true"
-                android:layout_gravity="center"
+                android:text="Admin"
                 android:textColor="#222222"
                 android:textSize="10sp"
-                android:visibility="@{user.role==0? View.VISIBLE:View.GONE, default=visible}"
                 tools:ignore="SmallSp" />
         </LinearLayout>
-
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -109,7 +108,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="6dp"
             android:background="@drawable/bg_btn_manager_member_business"
-            android:visibility="@{user.role==0? View.VISIBLE:View.GONE, default=visible}"
             app:layout_constraintBottom_toBottomOf="@+id/btn_exit"
             app:layout_constraintEnd_toStartOf="@+id/btn_exit"
             app:layout_constraintTop_toTopOf="@+id/btn_exit">
@@ -157,8 +155,8 @@
             app:tabIndicatorColor="@color/white"
             app:tabMode="scrollable"
             app:tabRippleColor="@null"
-            app:tabTextAppearance="@style/MyCustomTextAppearance"
             app:tabSelectedTextColor="@color/white"
+            app:tabTextAppearance="@style/MyCustomTextAppearance"
             app:tabTextColor="#99FFFFFF"
             app:tabUnboundedRipple="true" />
 
@@ -167,8 +165,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
-            android:paddingTop="16dp"
             android:background="@drawable/bg_white_corner_7"
+            android:paddingTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
