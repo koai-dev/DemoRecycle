@@ -10,6 +10,9 @@ import com.idance.hocnhayonline.MainActivity
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentLoginBinding
 import com.idance.hocnhayonline.signup.SignUpFragment
+import com.idance.hocnhayonline.utils.Constants
+import com.idance.hocnhayonline.utils.SharePreference
+import com.koaidev.idancesdk.model.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +38,23 @@ class LoginFragment : BaseFragment() {
             insets.consumeSystemWindowInsets()
         }
 
+        //init user for begin
+        val currentUser = getOldUserEmailAndPassword()
+        currentUser.email?.let { binding.edtEmail.setText(currentUser.email) }
+        currentUser.password?.let { binding.edtPassword.setText(currentUser.password) }
+
         setClickListener()
+    }
+
+    private fun saveUserEmailAndPassword(email: String?, password: String?) {
+        SharePreference.setStringPref(activity, Constants.PARAM_EMAIL, email)
+        SharePreference.setStringPref(activity, Constants.PARAM_PASSWORD, password)
+    }
+
+    private fun getOldUserEmailAndPassword(): User {
+        val email = SharePreference.getStringPref(activity, Constants.PARAM_EMAIL)
+        val password = SharePreference.getStringPref(activity, Constants.PARAM_PASSWORD)
+        return User(email = email, passwordAvailable = true, password = password)
     }
 
     private fun setClickListener() {

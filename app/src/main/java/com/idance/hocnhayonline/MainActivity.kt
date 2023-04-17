@@ -14,12 +14,18 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.idance.hocnhayonline.base.BaseActivity
 import com.idance.hocnhayonline.databinding.ActivityMainBinding
+import com.idance.hocnhayonline.utils.Constants
+import com.idance.hocnhayonline.utils.SharePreference
 import com.idance.hocnhayonline.welcome.WelcomeLoginFragment
+import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.Config
+import com.koaidev.idancesdk.model.User
 import com.koaidev.idancesdk.service.ApiController
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
@@ -30,7 +36,7 @@ import retrofit2.Response
 class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainPagerAdapter: MainPagerAdapter
-    var doubleBackToExitPressedOnce = false
+    private var doubleBackToExitPressedOnce = false
     lateinit var callbackManager: CallbackManager
 
 
@@ -55,11 +61,13 @@ class MainActivity : BaseActivity() {
                 override fun onSuccess(result: LoginResult) {
                     val accessToken = AccessToken.getCurrentAccessToken()
                     if (accessToken != null && !accessToken.isExpired) {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Đăng nhập thành công.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        val credential = FacebookAuthProvider.getCredential(accessToken.token)
+                        FirebaseAuth.getInstance().signInWithCredential(credential)
+                            .addOnCompleteListener {
+                                if (it.isSuccessful){
+
+                                }
+                            }
                     }
                 }
 
@@ -129,6 +137,10 @@ class MainActivity : BaseActivity() {
             }
 
         })
+    }
+
+    private fun saveUserUid(uid: String?){
+        SharePreference.setStringPref(this, Constants.PARAM_UID, uid)
     }
 
     private fun tabProfileClick() {

@@ -2,9 +2,11 @@ package com.idance.hocnhayonline.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SharePreference {
-
     companion object {
         const val CURRENT_LANGUAGE: String = "current_language"
         const val CURRENT_THEME: String = "current_theme"
@@ -19,21 +21,25 @@ class SharePreference {
         }
 
         fun setIntPref(context: Context, key: String, value: Int) {
-            val pref: SharedPreferences =
-                context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-            pref.edit().putInt(key, value).apply()
+            CoroutineScope(Dispatchers.IO).launch {
+                val pref: SharedPreferences =
+                    context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+                pref.edit().putInt(key, value).apply()
+            }
         }
 
         fun getStringPref(context: Context, key: String): String? {
             val pref: SharedPreferences? =
                 context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-            return pref!!.getString(key, "")
+            return pref!!.getString(key, null)
         }
 
-        fun setStringPref(context: Context, key: String, value: String) {
-            val pref: SharedPreferences =
-                context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-            pref.edit().putString(key, value).apply()
+        fun setStringPref(context: Context, key: String, value: String?) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val pref: SharedPreferences =
+                    context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+                pref.edit().putString(key, value).apply()
+            }
         }
 
         fun getBooleanPref(context: Context, key: String): Boolean {
@@ -45,9 +51,11 @@ class SharePreference {
         }
 
         fun setBooleanPref(context: Context, key: String, value: Boolean) {
-            val pref: SharedPreferences =
-                context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-            pref.edit().putBoolean(key, value).apply()
+           CoroutineScope(Dispatchers.IO).launch {
+               val pref: SharedPreferences =
+                   context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+               pref.edit().putBoolean(key, value).apply()
+           }
         }
     }
 

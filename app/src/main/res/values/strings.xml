@@ -26,6 +26,8 @@
     <string name="txt_accept_term">Bạn đồng ý với mọi <font color='#FF8F71'>điều khoản &amp; điều kiện</font> trong thỏa thuận người dùng của IDance.</string>
     <string name="txt_welcome_to_idance">Chào mừng bạn đến với <font color='#FF8F71'>IDANCE</font></string>
     <string name="cancel">Hủy bỏ</string>
+    <string name="password">Mật khẩu</string>
+    <string name="or">Hoặc</string>
 
 
 </resources>

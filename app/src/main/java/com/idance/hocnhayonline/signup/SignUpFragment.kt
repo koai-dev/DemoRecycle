@@ -2,7 +2,6 @@ package com.idance.hocnhayonline.signup
 
 import android.os.Bundle
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
@@ -10,12 +9,9 @@ import com.idance.hocnhayonline.MainActivity
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentSignUpBinding
 import com.idance.hocnhayonline.utils.Constants
+import com.idance.hocnhayonline.utils.LoginUtils
+import com.idance.hocnhayonline.utils.SharePreference
 import com.koaidev.idancesdk.model.User
-import com.koaidev.idancesdk.service.ApiController
-import okhttp3.MultipartBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SignUpFragment : BaseFragment() {
     private lateinit var binding: FragmentSignUpBinding
@@ -41,31 +37,30 @@ class SignUpFragment : BaseFragment() {
         setClick()
     }
 
+    private fun saveUserEmailAndPassword(email: String?, password: String?) {
+        SharePreference.setStringPref(activity, Constants.PARAM_EMAIL, email)
+        SharePreference.setStringPref(activity, Constants.PARAM_PASSWORD, password)
+    }
+
     private fun setClick() {
         binding.btnRegister.setOnClickListener {
-            signUp("Khánh", "dtakotesstaa12@gmail.com", "12345")
+            LoginUtils.signUp(
+                "Khánh",
+                "dtakotesstaa12@gmail.com",
+                "12345",
+                object : LoginUtils.LoginCallBack {
+                    override fun onLoginSuccess(user: User?) {
+
+                    }
+
+                    override fun onLoginFail(user: User?) {
+
+                    }
+
+                })
         }
         binding.btnBack.setOnClickListener {
             activity.onBackPressedDispatcher.onBackPressed()
         }
-    }
-
-    private fun signUp(name: String, email: String, password: String) {
-        val fields = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart(Constants.PARAM_NAME, name)
-            .addFormDataPart(Constants.PARAM_EMAIL, email)
-            .addFormDataPart(Constants.PARAM_PASSWORD, password)
-
-        ApiController.getService().signup(fields.build()).enqueue(object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                   activity.clearStack()
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                t.printStackTrace()
-            }
-
-        })
     }
 }
