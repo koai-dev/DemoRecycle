@@ -51,11 +51,11 @@ class SharePreference {
         }
 
         fun setBooleanPref(context: Context, key: String, value: Boolean) {
-           CoroutineScope(Dispatchers.IO).launch {
-               val pref: SharedPreferences =
-                   context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-               pref.edit().putBoolean(key, value).apply()
-           }
+            CoroutineScope(Dispatchers.IO).launch {
+                val pref: SharedPreferences =
+                    context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+                pref.edit().putBoolean(key, value).apply()
+            }
         }
     }
 

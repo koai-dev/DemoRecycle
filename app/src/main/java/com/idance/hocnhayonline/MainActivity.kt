@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
@@ -14,16 +15,15 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.idance.hocnhayonline.base.BaseActivity
 import com.idance.hocnhayonline.databinding.ActivityMainBinding
-import com.idance.hocnhayonline.utils.Constants
-import com.idance.hocnhayonline.utils.SharePreference
+import com.idance.hocnhayonline.utils.LoginUtils
 import com.idance.hocnhayonline.welcome.WelcomeLoginFragment
-import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.Config
 import com.koaidev.idancesdk.model.User
 import com.koaidev.idancesdk.service.ApiController
@@ -38,6 +38,31 @@ class MainActivity : BaseActivity() {
     private lateinit var mainPagerAdapter: MainPagerAdapter
     private var doubleBackToExitPressedOnce = false
     lateinit var callbackManager: CallbackManager
+    lateinit var loginCallBack: LoginUtils.LoginCallBack
+
+    val registerForActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            val oneTapClient = Identity.getSignInClient(this)
+            val credential = oneTapClient.getSignInCredentialFromIntent(it?.data)
+            val idToken = credential.googleIdToken
+            Firebase.auth.signInWithCredential(GoogleAuthProvider.getCredential(idToken, null))
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val uid = task.result.user?.uid
+                        val phone = task.result.user?.phoneNumber
+                        val email = task.result.user?.email
+                        if (uid != null) {
+                            LoginUtils.authFirebase(this, uid, email, phone, loginCallBack)
+                        }
+                    } else {
+                        loginCallBack.onLoginFail(
+                            User(
+                                message = task.exception?.message ?: "Unknown Error."
+                            )
+                        )
+                    }
+                }
+        }
 
 
     override fun getBindingView(): ViewBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -62,10 +87,21 @@ class MainActivity : BaseActivity() {
                     val accessToken = AccessToken.getCurrentAccessToken()
                     if (accessToken != null && !accessToken.isExpired) {
                         val credential = FacebookAuthProvider.getCredential(accessToken.token)
-                        FirebaseAuth.getInstance().signInWithCredential(credential)
-                            .addOnCompleteListener {
-                                if (it.isSuccessful){
-
+                        Firebase.auth.signInWithCredential(credential)
+                            .addOnCompleteListener {task->
+                                if (task.isSuccessful) {
+                                    val uid = task.result.user?.uid
+                                    val phone = task.result.user?.phoneNumber
+                                    val email = task.result.user?.email
+                                    if (uid != null) {
+                                        LoginUtils.authFirebase(this@MainActivity, uid, email, phone, loginCallBack)
+                                    }
+                                } else {
+                                    loginCallBack.onLoginFail(
+                                        User(
+                                            message = task.exception?.message ?: "Unknown Error."
+                                        )
+                                    )
                                 }
                             }
                     }
@@ -137,10 +173,6 @@ class MainActivity : BaseActivity() {
             }
 
         })
-    }
-
-    private fun saveUserUid(uid: String?){
-        SharePreference.setStringPref(this, Constants.PARAM_UID, uid)
     }
 
     private fun tabProfileClick() {

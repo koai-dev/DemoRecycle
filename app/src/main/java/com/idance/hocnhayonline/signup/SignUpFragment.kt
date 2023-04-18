@@ -8,9 +8,7 @@ import androidx.viewbinding.ViewBinding
 import com.idance.hocnhayonline.MainActivity
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentSignUpBinding
-import com.idance.hocnhayonline.utils.Constants
 import com.idance.hocnhayonline.utils.LoginUtils
-import com.idance.hocnhayonline.utils.SharePreference
 import com.koaidev.idancesdk.model.User
 
 class SignUpFragment : BaseFragment() {
@@ -37,14 +35,9 @@ class SignUpFragment : BaseFragment() {
         setClick()
     }
 
-    private fun saveUserEmailAndPassword(email: String?, password: String?) {
-        SharePreference.setStringPref(activity, Constants.PARAM_EMAIL, email)
-        SharePreference.setStringPref(activity, Constants.PARAM_PASSWORD, password)
-    }
-
     private fun setClick() {
         binding.btnRegister.setOnClickListener {
-            LoginUtils.signUp(
+            LoginUtils.signUp(activity,
                 "Khánh",
                 "dtakotesstaa12@gmail.com",
                 "12345",
