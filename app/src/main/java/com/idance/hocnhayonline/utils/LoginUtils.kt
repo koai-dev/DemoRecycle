@@ -4,13 +4,9 @@ import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.idance.hocnhayonline.MainActivity
@@ -21,7 +17,6 @@ import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 object LoginUtils {
     fun getUserByUid(context: Context): User? {
@@ -50,8 +45,7 @@ object LoginUtils {
         password: String,
         loginCallBack: LoginCallBack
     ) {
-        val fields = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
+        val fields = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart(Constants.PARAM_NAME, name)
             .addFormDataPart(Constants.PARAM_EMAIL, email)
             .addFormDataPart(Constants.PARAM_PASSWORD, password)
@@ -75,8 +69,7 @@ object LoginUtils {
     }
 
     fun login(context: Context, email: String, password: String, loginCallBack: LoginCallBack) {
-        val fields = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
+        val fields = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart(Constants.PARAM_EMAIL, email)
             .addFormDataPart(Constants.PARAM_PASSWORD, password)
         ApiController.getService().login(fields.build()).enqueue(object : Callback<User> {
@@ -98,14 +91,9 @@ object LoginUtils {
     }
 
     fun authFirebase(
-        context: Context,
-        uid: String,
-        email: String?,
-        phone: String?,
-        loginCallBack: LoginCallBack
+        context: Context, uid: String, email: String?, phone: String?, loginCallBack: LoginCallBack
     ) {
-        val fields = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
+        val fields = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart(Constants.PARAM_EMAIL, email ?: "")
             .addFormDataPart(Constants.PARAM_UID, uid)
             .addFormDataPart(Constants.PARAM_PHONE, phone ?: "")
@@ -129,37 +117,44 @@ object LoginUtils {
 
     fun loginByFacebook(activity: MainActivity) {
         LoginManager.getInstance().logInWithReadPermissions(
-            activity,
-            activity.callbackManager,
-            listOf("public_profile", "email")
+            activity, activity.callbackManager, listOf("public_profile", "email")
         )
     }
 
     fun loginByGoogle(
-        context: AppCompatActivity,
+        oneTapClient: SignInClient,
         registerForActivityResultLauncher: ActivityResultLauncher<IntentSenderRequest>,
         loginCallBack: LoginCallBack
     ) {
-        val signInRequest = BeginSignInRequest.builder().setGoogleIdTokenRequestOptions(
-            BeginSignInRequest.GoogleIdTokenRequestOptions.builder().setSupported(true)
-                .setServerClientId(Const.SERVER_CLIENT_ID).setFilterByAuthorizedAccounts(false)
-                .build()
-        ).build()
-        val oneTapClient = Identity.getSignInClient(context)
+        val signInRequest = BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest
+                    .GoogleIdTokenRequestOptions
+                    .builder()
+                    .setSupported(true)
+                    .setServerClientId(Const.SERVER_CLIENT_ID).setFilterByAuthorizedAccounts(false)
+                    .build()
+            )
+            .setPasswordRequestOptions(
+                BeginSignInRequest.PasswordRequestOptions.builder()
+                    .setSupported(true)
+                    .build()
+            )
+            .setAutoSelectEnabled(false)
+            .build()
 
-        oneTapClient.beginSignIn(signInRequest)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    val intentSenderRequest =
-                        IntentSenderRequest.Builder(it.result.pendingIntent.intentSender)
-                            .setFlags(FLAG_IMMUTABLE, FLAG_IMMUTABLE).build()
-                    registerForActivityResultLauncher.launch(intentSenderRequest)
-                } else if (it.isCanceled) {
-                    loginCallBack.onLoginFail(User(message = "Canceled login by google"))
-                } else {
-                    loginCallBack.onLoginFail(User(message = it.exception?.message))
-                }
+        oneTapClient.beginSignIn(signInRequest).addOnCompleteListener {
+            if (it.isSuccessful) {
+                val intentSenderRequest =
+                    IntentSenderRequest.Builder(it.result.pendingIntent.intentSender)
+                        .setFlags(FLAG_IMMUTABLE, FLAG_IMMUTABLE).build()
+                registerForActivityResultLauncher.launch(intentSenderRequest)
+            } else if (it.isCanceled) {
+                loginCallBack.onLoginFail(User(message = "Canceled login by google"))
+            } else {
+                loginCallBack.onLoginFail(User(message = it.exception?.message))
             }
+        }
 
     }
 

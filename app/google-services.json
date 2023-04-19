@@ -12,7 +12,12 @@
           "package_name": "com.idance.adminmanager"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "3297000991-mek0stvofrl8kf83dbn5p7h4dhv1t6bm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAqTe0Js_7j7ZA5jjzb0WXhsvNLGk5xAiE"
@@ -20,7 +25,20 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3297000991-mek0stvofrl8kf83dbn5p7h4dhv1t6bm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "3297000991-1g6p4mmekrtenah6n3q5vmqde5a0jvj0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.idance.hocnhayonline",
+                "app_store_id": "1611028904"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +49,60 @@
           "package_name": "com.idance.hocnhayonline"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "3297000991-0rjueillbkgnp5dpmh6ttmppmf3vmh8m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idance.hocnhayonline",
+            "certificate_hash": "5b67b8f5962d106142b356571907246d7f249e9a"
+          }
+        },
+        {
+          "client_id": "3297000991-9bvi3tstopvog24300v65um794nse2nv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idance.hocnhayonline",
+            "certificate_hash": "710232625fb83f8d1642eaa9cf46059e1b8e9b92"
+          }
+        },
+        {
+          "client_id": "3297000991-df0hn2asgbii32t0avmvi29spet03euj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idance.hocnhayonline",
+            "certificate_hash": "767adc68761c41d67beea6cbb62337d670db386a"
+          }
+        },
+        {
+          "client_id": "3297000991-mhg6n9idof7ogic73843pqsq79qa3p8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idance.hocnhayonline",
+            "certificate_hash": "655661148b79e6dc02dea8ae3416a512d6c10235"
+          }
+        },
+        {
+          "client_id": "3297000991-o99a715bq51826m7b2bpc9v1irm09pkb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idance.hocnhayonline",
+            "certificate_hash": "f1392d00d459106d2b96bbe1f84d47c396ede0b6"
+          }
+        },
+        {
+          "client_id": "3297000991-op07qni04trq6crdeeugvv5j6p6cs3tl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idance.hocnhayonline",
+            "certificate_hash": "8d792ee41156a8be23e41c0f596dbe7a12707944"
+          }
+        },
+        {
+          "client_id": "3297000991-mek0stvofrl8kf83dbn5p7h4dhv1t6bm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAqTe0Js_7j7ZA5jjzb0WXhsvNLGk5xAiE"
@@ -39,7 +110,20 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3297000991-mek0stvofrl8kf83dbn5p7h4dhv1t6bm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "3297000991-1g6p4mmekrtenah6n3q5vmqde5a0jvj0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.idance.hocnhayonline",
+                "app_store_id": "1611028904"
+              }
+            }
+          ]
         }
       }
     }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayoutMediator
+import com.idance.hocnhayonline.MainActivity
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentHomeBinding
@@ -27,6 +28,7 @@ class HomeFragment : BaseFragment() {
     private lateinit var slideAdapter: SlideAdapter
     private lateinit var lastedUnitAdapter: MovieAdapter
     private lateinit var lastedCourseAdapter: MovieAdapter
+    private lateinit var activity: MainActivity
     override fun getBindingView(container: ViewGroup?): ViewBinding {
         return DataBindingUtil.inflate(layoutInflater, R.layout.fragment_home, container, false)
     }
@@ -34,6 +36,7 @@ class HomeFragment : BaseFragment() {
     override fun initView(savedInstanceState: Bundle?, binding: ViewBinding) {
         super.initView(savedInstanceState, binding)
         this.binding = binding as FragmentHomeBinding
+        activity = requireActivity() as MainActivity
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val paramsTop =
                 binding.pointTop.layoutParams as ViewGroup.MarginLayoutParams
@@ -64,12 +67,12 @@ class HomeFragment : BaseFragment() {
                 CoroutineScope(Dispatchers.IO).launch {
                     delay(2500)
                     if (position < slideAdapter.itemCount - 1) {
-                        requireActivity().runOnUiThread {
+                        activity.runOnUiThread {
                             binding.slidePager.currentItem += 1
                             binding.slide = slideAdapter.currentList[position].thumb
                         }
                     } else {
-                        requireActivity().runOnUiThread {
+                        activity.runOnUiThread {
                             binding.slidePager.currentItem = 0
                             binding.slide = slideAdapter.currentList[0].thumb
                         }
@@ -91,34 +94,66 @@ class HomeFragment : BaseFragment() {
             "https://img.freepik.com/free-photo/people-taking-part-dance-therapy-class_23-2149346547.jpg?w=1060&t=st=1680389542~exp=1680390142~hmac=3a48201074fb904010ebc32c214df5d9a7dce8d507307913f7a9e7c59a3d7b0e"
     }
 
-    private fun setTopicList(){
+    private fun setTopicList() {
         lastedCourseAdapter = MovieAdapter(true)
         binding.rcvLastedCourse.adapter = lastedCourseAdapter
-        binding.rcvLastedCourse.layoutManager = object : LinearLayoutManager(requireContext(), HORIZONTAL, false) {
-            override fun canScrollVertically(): Boolean {
-                return false
+        binding.rcvLastedCourse.layoutManager =
+            object : LinearLayoutManager(requireContext(), HORIZONTAL, false) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
             }
-        }
 
         lastedUnitAdapter = MovieAdapter(true)
         binding.rcvLastedUnit.adapter = lastedUnitAdapter
-        binding.rcvLastedUnit.layoutManager = object : LinearLayoutManager(requireContext(), HORIZONTAL, false) {
-            override fun canScrollVertically(): Boolean {
-                return false
+        binding.rcvLastedUnit.layoutManager =
+            object : LinearLayoutManager(requireContext(), HORIZONTAL, false) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
             }
-        }
     }
 
-    private fun genTopicData(){
+    private fun genTopicData() {
         val list = ArrayList<Movie>()
-        list.add(Movie("https://flypro.vn/photos/old_data/1471261197.jpg","Nhảy hiện đại"))
-        list.add(Movie("https://images.elipsport.vn/anh-seo-tin-tuc/2021/2/4/nhay-hien-dai-co-ban-1.jpg","Nhảy KPOP"))
-        list.add(Movie("https://unica.vn/upload/landingpage/2400124355_cac-dieu-nhay-hien-dai-duoc-gioi-tre-me-met-nhat-hien-nay_thumb.jpg","Nhảy sexy"))
-        list.add(Movie("https://inhat.vn/hcm/wp-content/uploads/2022/05/trung-t%C3%A2m-d%E1%BA%A1y-nh%E1%BA%A3y-kpop-%E1%BB%9F-tphcm-6-min.jpg","Lên nóc nhà"))
-        list.add(Movie("https://flypro.vn/photos/old_data/1471261197.jpg","Nhảy hiện đại"))
-        list.add(Movie("https://images.elipsport.vn/anh-seo-tin-tuc/2021/2/4/nhay-hien-dai-co-ban-1.jpg","Nhảy KPOP"))
-        list.add(Movie("https://unica.vn/upload/landingpage/2400124355_cac-dieu-nhay-hien-dai-duoc-gioi-tre-me-met-nhat-hien-nay_thumb.jpg","Nhảy sexy"))
-        list.add(Movie("https://inhat.vn/hcm/wp-content/uploads/2022/05/trung-t%C3%A2m-d%E1%BA%A1y-nh%E1%BA%A3y-kpop-%E1%BB%9F-tphcm-6-min.jpg","Lên nóc nhà"))
+        list.add(Movie("https://flypro.vn/photos/old_data/1471261197.jpg", "Nhảy hiện đại"))
+        list.add(
+            Movie(
+                "https://images.elipsport.vn/anh-seo-tin-tuc/2021/2/4/nhay-hien-dai-co-ban-1.jpg",
+                "Nhảy KPOP"
+            )
+        )
+        list.add(
+            Movie(
+                "https://unica.vn/upload/landingpage/2400124355_cac-dieu-nhay-hien-dai-duoc-gioi-tre-me-met-nhat-hien-nay_thumb.jpg",
+                "Nhảy sexy"
+            )
+        )
+        list.add(
+            Movie(
+                "https://inhat.vn/hcm/wp-content/uploads/2022/05/trung-t%C3%A2m-d%E1%BA%A1y-nh%E1%BA%A3y-kpop-%E1%BB%9F-tphcm-6-min.jpg",
+                "Lên nóc nhà"
+            )
+        )
+        list.add(Movie("https://flypro.vn/photos/old_data/1471261197.jpg", "Nhảy hiện đại"))
+        list.add(
+            Movie(
+                "https://images.elipsport.vn/anh-seo-tin-tuc/2021/2/4/nhay-hien-dai-co-ban-1.jpg",
+                "Nhảy KPOP"
+            )
+        )
+        list.add(
+            Movie(
+                "https://unica.vn/upload/landingpage/2400124355_cac-dieu-nhay-hien-dai-duoc-gioi-tre-me-met-nhat-hien-nay_thumb.jpg",
+                "Nhảy sexy"
+            )
+        )
+        list.add(
+            Movie(
+                "https://inhat.vn/hcm/wp-content/uploads/2022/05/trung-t%C3%A2m-d%E1%BA%A1y-nh%E1%BA%A3y-kpop-%E1%BB%9F-tphcm-6-min.jpg",
+                "Lên nóc nhà"
+            )
+        )
         slideAdapter.submitList(list)
         lastedUnitAdapter.submitList(list)
         lastedCourseAdapter.submitList(list)

@@ -18,14 +18,24 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            keyAlias "key0"
+            keyPassword "123456"
+            storeFile file("D:\\MyApplication\\app\\key.jks")
+            storePassword "123456"
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            debuggable true
         }
     }
     compileOptions {
@@ -124,5 +134,4 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
     implementation 'androidx.compose.runtime:runtime-livedata:1.4.1'
-
 }

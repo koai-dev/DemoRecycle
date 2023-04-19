@@ -58,7 +58,7 @@ class LoginFragment : BaseFragment(), LoginUtils.LoginCallBack {
         }
         binding.layoutFacebookGoogle.btnGoogle.setOnClickListener {
             LoginUtils.loginByGoogle(
-                activity,
+                activity.oneTapClient,
                 activity.registerForActivityResultLauncher,
                 activity.loginCallBack
             )
