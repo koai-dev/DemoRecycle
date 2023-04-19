@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_business">
+        android:background="@color/bg_app_black">
 
         <TextView
             android:id="@+id/textView16"
@@ -94,53 +94,11 @@
                 android:paddingHorizontal="4dp"
                 android:paddingVertical="2dp"
                 android:singleLine="true"
-                android:text="Admin"
+                android:text="@string/premium"
                 android:textColor="#222222"
                 android:textSize="10sp"
                 tools:ignore="SmallSp" />
         </LinearLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="6dp"
-            android:background="@drawable/bg_btn_manager_member_business"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_exit"
-            app:layout_constraintEnd_toStartOf="@+id/btn_exit"
-            app:layout_constraintTop_toTopOf="@+id/btn_exit">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btn_manager_member"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/textView20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Quản lý thành viên"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textFontWeight="400"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"

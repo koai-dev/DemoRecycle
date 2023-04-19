@@ -216,11 +216,15 @@ class MainActivity : BaseActivity() {
     }
 
     private fun tabProfileClick() {
-        if (AccountUtil.getUser().userId != null) {
+        if (AccountUtil.isLogin()) {
             binding.pagerMain.currentItem = 4
         } else {
             addFragment(WelcomeLoginFragment())
         }
+    }
+
+    fun tabHomeClick(){
+        binding.pagerMain.currentItem = 0
     }
 
     fun addFragment(fragment: Fragment) {

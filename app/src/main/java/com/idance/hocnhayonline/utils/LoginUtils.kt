@@ -10,6 +10,7 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.idance.hocnhayonline.MainActivity
+import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.User
 import com.koaidev.idancesdk.service.ApiController
 import com.koaidev.idancesdk.utils.Const
@@ -161,6 +162,7 @@ object LoginUtils {
     fun logout(context: Context, logoutCallBack: LogoutCallBack) {
         saveUserEmailAndPassword(context, null, null)
         saveUserUid(context, null)
+        AccountUtil.setUser(null)
         Firebase.auth.signOut()
         logoutCallBack.onLogoutDone()
     }

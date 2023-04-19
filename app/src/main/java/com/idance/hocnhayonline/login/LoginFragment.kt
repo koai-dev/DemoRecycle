@@ -11,6 +11,7 @@ import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentLoginBinding
 import com.idance.hocnhayonline.signup.SignUpFragment
 import com.idance.hocnhayonline.utils.LoginUtils
+import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.User
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -66,11 +67,18 @@ class LoginFragment : BaseFragment(), LoginUtils.LoginCallBack {
     }
 
     override fun onLoginSuccess(user: User?) {
-        Toast.makeText(activity, "Thành công: ${user?.status}", Toast.LENGTH_SHORT)
+        Toast.makeText(
+            activity,
+            "Chào mừng ${user?.name ?: user?.email} đã đến với IDance",
+            Toast.LENGTH_SHORT
+        )
             .show()
+        activity.clearStack()
+        AccountUtil.setUser(user)
     }
 
     override fun onLoginFail(user: User?) {
         Toast.makeText(activity, user?.message, Toast.LENGTH_SHORT).show()
+        AccountUtil.setUser(null)
     }
 }

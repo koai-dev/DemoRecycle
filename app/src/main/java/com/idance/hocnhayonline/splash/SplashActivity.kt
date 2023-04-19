@@ -6,11 +6,14 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.WindowManager
 import androidx.viewbinding.ViewBinding
 import com.idance.hocnhayonline.MainActivity
 import com.idance.hocnhayonline.base.BaseActivity
 import com.idance.hocnhayonline.databinding.ActivitySplashBinding
 import com.idance.hocnhayonline.utils.LoginUtils
+import com.koaidev.idancesdk.AccountUtil
+import com.koaidev.idancesdk.model.User
 import java.security.MessageDigest
 
 @SuppressLint("CustomSplashScreen")
@@ -19,21 +22,73 @@ class SplashActivity : BaseActivity() {
 
     override fun initView(savedInstanceState: Bundle?, binding: ViewBinding) {
         super.initView(savedInstanceState, binding)
-        LoginUtils.getUserByUid(this)
-        printHashKey(this)
-        binding.root.postDelayed({ openActivity(MainActivity::class.java, false) }, 2000)
-    }
-    fun printHashKey(pContext: Context?) {
-        try {
-            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-            for (signature in info.signatures) {
-                val md = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                val hashKey = String(Base64.encode(md.digest(), 0))
-                Log.e("SplashActivity.TAG", "printHashKey() Hash Key: $hashKey")
+        val user = LoginUtils.getUserByUid(this) ?: LoginUtils.getOldUserEmailAndPassword(this)
+        if (user != null) {
+            if (user.uid != null) {
+                LoginUtils.authFirebase(
+                    this,
+                    user.uid!!,
+                    "",
+                    "",
+                    object : LoginUtils.LoginCallBack {
+                        override fun onLoginSuccess(user: User?) {
+                            AccountUtil.setUser(user!!)
+                            binding.root.postDelayed({
+                                openActivity(
+                                    MainActivity::class.java,
+                                    false
+                                )
+                            }, 2000)
+                        }
+
+                        override fun onLoginFail(user: User?) {
+                            AccountUtil.setUser(null)
+                            binding.root.postDelayed({
+                                openActivity(
+                                    MainActivity::class.java,
+                                    false
+                                )
+                            }, 2000)
+                        }
+
+                    })
+            } else {
+                LoginUtils.login(
+                    this,
+                    user.email!!,
+                    user.password!!,
+                    object : LoginUtils.LoginCallBack {
+                        override fun onLoginSuccess(user: User?) {
+                            AccountUtil.setUser(user!!)
+                            binding.root.postDelayed({
+                                openActivity(
+                                    MainActivity::class.java,
+                                    false
+                                )
+                            }, 2000)
+                        }
+
+                        override fun onLoginFail(user: User?) {
+                            AccountUtil.setUser(null)
+                            binding.root.postDelayed({
+                                openActivity(
+                                    MainActivity::class.java,
+                                    false
+                                )
+                            }, 2000)
+
+                        }
+
+                    })
             }
-        } catch (e: Exception) {
-            Log.e("SplashActivity.TAG", "printHashKey()", e)
+        }else{
+            AccountUtil.setUser(null)
+            binding.root.postDelayed({
+                openActivity(
+                    MainActivity::class.java,
+                    false
+                )
+            }, 2000)
         }
     }
 }
