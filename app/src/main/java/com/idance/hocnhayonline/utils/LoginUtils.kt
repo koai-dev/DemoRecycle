@@ -142,7 +142,7 @@ object LoginUtils {
     ) {
         val signInRequest = BeginSignInRequest.builder().setGoogleIdTokenRequestOptions(
             BeginSignInRequest.GoogleIdTokenRequestOptions.builder().setSupported(true)
-                .setServerClientId(Const.SERVER_CLIENT_ID).setFilterByAuthorizedAccounts(true)
+                .setServerClientId(Const.SERVER_CLIENT_ID).setFilterByAuthorizedAccounts(false)
                 .build()
         ).build()
         val oneTapClient = Identity.getSignInClient(context)
@@ -157,7 +157,7 @@ object LoginUtils {
                 } else if (it.isCanceled) {
                     loginCallBack.onLoginFail(User(message = "Canceled login by google"))
                 } else {
-                    loginCallBack.onLoginFail(User(message = "Error on login by google"))
+                    loginCallBack.onLoginFail(User(message = it.exception?.message))
                 }
             }
 

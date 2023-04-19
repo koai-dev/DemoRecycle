@@ -5,6 +5,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
@@ -24,6 +27,7 @@ import com.idance.hocnhayonline.base.BaseActivity
 import com.idance.hocnhayonline.databinding.ActivityMainBinding
 import com.idance.hocnhayonline.utils.LoginUtils
 import com.idance.hocnhayonline.welcome.WelcomeLoginFragment
+import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.Config
 import com.koaidev.idancesdk.model.User
 import com.koaidev.idancesdk.service.ApiController
@@ -43,25 +47,27 @@ class MainActivity : BaseActivity() {
     val registerForActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             val oneTapClient = Identity.getSignInClient(this)
-            val credential = oneTapClient.getSignInCredentialFromIntent(it?.data)
-            val idToken = credential.googleIdToken
-            Firebase.auth.signInWithCredential(GoogleAuthProvider.getCredential(idToken, null))
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val uid = task.result.user?.uid
-                        val phone = task.result.user?.phoneNumber
-                        val email = task.result.user?.email
-                        if (uid != null) {
-                            LoginUtils.authFirebase(this, uid, email, phone, loginCallBack)
-                        }
-                    } else {
-                        loginCallBack.onLoginFail(
-                            User(
-                                message = task.exception?.message ?: "Unknown Error."
+            if (it?.data != null) {
+                val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
+                val idToken = credential.googleIdToken
+                Firebase.auth.signInWithCredential(GoogleAuthProvider.getCredential(idToken, null))
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val uid = task.result.user?.uid
+                            val phone = task.result.user?.phoneNumber
+                            val email = task.result.user?.email
+                            if (uid != null) {
+                                LoginUtils.authFirebase(this, uid, email, phone, loginCallBack)
+                            }
+                        } else {
+                            loginCallBack.onLoginFail(
+                                User(
+                                    message = task.exception?.message ?: "Unknown Error."
+                                )
                             )
-                        )
+                        }
                     }
-                }
+            }
         }
 
 
@@ -88,13 +94,19 @@ class MainActivity : BaseActivity() {
                     if (accessToken != null && !accessToken.isExpired) {
                         val credential = FacebookAuthProvider.getCredential(accessToken.token)
                         Firebase.auth.signInWithCredential(credential)
-                            .addOnCompleteListener {task->
+                            .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     val uid = task.result.user?.uid
                                     val phone = task.result.user?.phoneNumber
                                     val email = task.result.user?.email
                                     if (uid != null) {
-                                        LoginUtils.authFirebase(this@MainActivity, uid, email, phone, loginCallBack)
+                                        LoginUtils.authFirebase(
+                                            this@MainActivity,
+                                            uid,
+                                            email,
+                                            phone,
+                                            loginCallBack
+                                        )
                                     }
                                 } else {
                                     loginCallBack.onLoginFail(
@@ -112,6 +124,10 @@ class MainActivity : BaseActivity() {
         setMainPager()
         setStateBar(0)
         setUpListener()
+        binding.root.post {
+            binding.btnSupport.setWidthHeight(binding.pagerMain.measuredHeight)
+        }
+        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show()
     }
 
     private fun setMainPager() {
@@ -176,7 +192,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun tabProfileClick() {
-        if (Firebase.auth.currentUser != null) {
+        if (AccountUtil.getUser().userId != null) {
             binding.pagerMain.currentItem = 4
         } else {
             addFragment(WelcomeLoginFragment())
