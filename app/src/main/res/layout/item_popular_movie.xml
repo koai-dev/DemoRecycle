@@ -29,38 +29,34 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height='wrap_content'
-        android:clickable="true"
-        android:focusable="true"
         android:background="?attr/selectableItemBackground"
-        >
+        android:clickable="true"
+        android:focusable="true">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/cardView4"
-            android:layout_width="132dp"
-            android:layout_height="65dp"
-            android:scaleType="fitXY"
             thumb="@{movie.thumbnailUrl}"
-            android:src="@drawable/bg_business"
-            app:shapeAppearanceOverlay="@style/Round6dp"
+            android:layout_width="85dp"
+            android:layout_height="128dp"
             android:layout_marginBottom="20dp"
-            app:cardCornerRadius="6dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_business"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="132:65"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/Round6dp" />
 
         <TextView
             android:id="@+id/txt_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:text="@{movie.title, default=ThuVienCuaTui}"
-            android:singleLine="true"
-            android:textColor="#222222"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{movie.title, default=Hiphopbasic}"
+            android:textColor="@color/white"
             android:textFontWeight="700"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView4"
