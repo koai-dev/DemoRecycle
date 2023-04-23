@@ -23,13 +23,13 @@
 
         <variable
             name="movie"
-            type="com.koaidev.idancesdk.model.Movie" />
+            type="com.koaidev.idancesdk.model.LatestMoviesItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height='wrap_content'
-        android:background="?attr/selectableItemBackground"
+        android:background="@drawable/bg_item_movie"
         android:clickable="true"
         android:focusable="true">
 
@@ -51,31 +51,71 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@{movie.title, default=Hiphopbasic}"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:text="@{movie.title, default=Hipknknaskfnaskfnksandksanfknsakfnaskfnksankashopbasic}"
             android:textColor="@color/white"
             android:textFontWeight="700"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView4"
             app:layout_constraintTop_toTopOf="@+id/cardView4" />
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="8dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text='@{"Ngày tham gia: " + movie.release}'
-            android:textColor="#666666"
-            android:textFontWeight="700"
+            android:text='@{movie.release, default=5.0}'
+            android:textColor="@color/color_50_white"
             android:textSize="13sp"
-            android:textStyle="bold"
+            app:drawableLeftCompat="@drawable/ic_star"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView4"
             app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#DBE3FF"
+                android:text="@string/young"
+                android:textColor="#88A4E8"
+                app:chipCornerRadius="60dp" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#DBE3FF"
+                android:text="@string/action"
+                android:textColor="#88A4E8"
+                app:chipCornerRadius="60dp" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:text='@{movie.runtime??"N/A", default="15m34s"}'
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:drawableLeftCompat="@drawable/ic_run_time"
+            app:layout_constraintBottom_toBottomOf="@+id/cardView4"
+            app:layout_constraintStart_toStartOf="@+id/tag"
+            app:layout_constraintTop_toBottomOf="@+id/tag" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

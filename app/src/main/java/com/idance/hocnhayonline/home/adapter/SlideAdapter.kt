@@ -8,16 +8,17 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.databinding.ItemSlideHomeBinding
-import com.idance.hocnhayonline.model.Movie
+import com.koaidev.idancesdk.model.SlideItem
 
-class MovieComparator : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem == newItem
+class SlideComparator : DiffUtil.ItemCallback<SlideItem>() {
+    override fun areItemsTheSame(oldItem: SlideItem, newItem: SlideItem): Boolean =
+        oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+    override fun areContentsTheSame(oldItem: SlideItem, newItem: SlideItem): Boolean =
         oldItem.id == newItem.id
 }
 
-class SlideAdapter : ListAdapter<Movie, SlideAdapter.SlideVH>(MovieComparator()) {
+class SlideAdapter : ListAdapter<SlideItem, SlideAdapter.SlideVH>(SlideComparator()) {
     class SlideVH(val binding: ItemSlideHomeBinding) : ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlideVH {
@@ -32,7 +33,7 @@ class SlideAdapter : ListAdapter<Movie, SlideAdapter.SlideVH>(MovieComparator())
     }
 
     override fun onBindViewHolder(holder: SlideVH, position: Int) {
-        holder.binding.movie = getItem(position)
+        holder.binding.slide = getItem(position)
         holder.binding.txtName.isSelected = true
         holder.binding.executePendingBindings()
     }

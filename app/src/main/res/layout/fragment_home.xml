@@ -22,10 +22,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/horizon"
             android:text="@string/dance_everywhere"
             android:textColor="@color/white"
             android:textFontWeight="700"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/point_top"
@@ -61,16 +62,16 @@
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/slide_tab_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="6dp"
-                        android:layout_margin="16dp"
+                        android:layout_height="4dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="6dp"
                         android:background="@android:color/transparent"
+                        android:clipToPadding="false"
                         app:layout_constraintBottom_toBottomOf="@id/slide_pager"
                         app:layout_constraintEnd_toEndOf="@+id/slide_pager"
                         app:tabBackground="@drawable/tab_slide_circle"
-                        app:tabIndicatorGravity="center"
                         app:tabIndicatorHeight="0dp"
-                        app:tabMaxWidth="6dp"
-                        app:tabPadding="3dp" />
+                        app:tabMaxWidth="12dp" />
 
                     <TextView
                         android:id="@+id/textView"
@@ -93,7 +94,9 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="@drawable/bg_edittext_search_home"
+                        android:clickable="true"
                         android:drawablePadding="16dp"
+                        android:focusable="true"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="16dp"
                         android:text="@string/type_key_for_search"
@@ -120,21 +123,24 @@
                             layout="@layout/item_menu_header"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                           />
 
                         <include
                             android:id="@+id/menu_category"
                             layout="@layout/item_menu_header"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                             />
 
                         <include
                             android:id="@+id/menu_teacher"
                             layout="@layout/item_menu_header"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            />
                     </LinearLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -142,6 +148,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/layoutMenu">
 
@@ -159,33 +166,41 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <ImageView
+                            android:id="@+id/btn_see_more_single"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_btn_circle"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="16dp"
+                            android:src="@drawable/ic_arrow"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView22"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView22"
+                            app:tint="@color/white" />
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rcv_lasted_unit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:orientation="horizontal"
                             android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="16dp"
+                            android:orientation="vertical"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/textView22"
-                            tools:listitem="@layout/item_popular_movie" />
+                            app:layout_constraintTop_toBottomOf="@id/btn_see_more_single"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/item_latest_single" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="16dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/container_last_unit">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:src="@drawable/ic_line_bottom_title"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView222"
-                            app:layout_constraintStart_toStartOf="@+id/textView222" />
 
                         <TextView
                             android:id="@+id/textView222"
@@ -194,7 +209,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
                             android:text="@string/txt_lasted_course"
-                            android:textColor="#222222"
+                            android:textColor="@color/white"
                             android:textFontWeight="700"
                             android:textSize="18sp"
                             android:textStyle="bold"
@@ -205,14 +220,15 @@
                             android:id="@+id/btn_see_more_course"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:background="@drawable/bg_btn_circle"
                             android:clickable="true"
                             android:focusable="true"
                             android:padding="16dp"
                             android:src="@drawable/ic_arrow"
                             app:layout_constraintBottom_toBottomOf="@+id/textView222"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/textView222" />
+                            app:layout_constraintTop_toTopOf="@+id/textView222"
+                            app:tint="@color/white" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rcv_lasted_course"
@@ -223,8 +239,8 @@
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/textView222"
-                            tools:listitem="@layout/item_movie_horizontal" />
+                            app:layout_constraintTop_toBottomOf="@id/btn_see_more_course"
+                            tools:listitem="@layout/item_latest_series" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>

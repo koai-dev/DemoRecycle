@@ -227,6 +227,14 @@ class MainActivity : BaseActivity() {
         binding.pagerMain.currentItem = 0
     }
 
+    fun tabSingleClick(){
+        binding.pagerMain.currentItem = 1
+    }
+
+    fun tabCourseClick(){
+        binding.pagerMain.currentItem = 2
+    }
+
     fun addFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .add(R.id.main_container, fragment)

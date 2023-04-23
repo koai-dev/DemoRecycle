@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">IDANCE</string>
     <string name="facebook_app_id">5973343579368269</string>
     <string name="fb_login_protocol_scheme">fb5973343579368269</string>
@@ -24,11 +24,14 @@
     <string name="type_email">Nhập Email</string>
     <string name="name_login">Tên đăng nhập</string>
     <string name="txt_accept_term">Bạn đồng ý với mọi <font color='#FF8F71'>điều khoản &amp; điều kiện</font> trong thỏa thuận người dùng của IDance.</string>
-    <string name="txt_welcome_to_idance">Chào mừng bạn đến với <font color='#FF8F71'>IDANCE</font></string>
+    <string name="txt_welcome_to_idance">Chào mừng bạn đến với <font family="horizon" color='#FF8F71'>IDANCE</font></string>
     <string name="cancel">Hủy bỏ</string>
     <string name="password">Mật khẩu</string>
     <string name="or">Hoặc</string>
     <string name="premium">Premium</string>
-
-
+    <string name="young">Trẻ trung</string>
+    <string name="let_dance">Let\'s dance</string>
+    <string name="action">Năng động</string>
+    <string name="txt_guide_search">Tìm kiếm bài nhảy đơn, khóa học và hơn thế nữa...</string>
+    <string name="txt_list_course">Danh sách khóa học</string>
 </resources>

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item  android:state_selected="true">
-        <shape android:shape="oval">
-            <corners android:radius="60dp"/>
-            <size android:width="6dp" android:height="6dp" />
-            <solid android:color="#FFFFFF" />
-        </shape>
+    <item android:state_selected="true">
+        <inset android:insetLeft="4dp" android:insetRight="4dp">
+            <shape android:shape="oval">
+                <corners android:radius="60dp" />
+                <size android:width="12dp" android:height="12dp" />
+                <solid android:color="@color/start_gradient_orange_button" />
+            </shape>
+        </inset>
     </item>
     <item android:state_selected="false">
-        <shape android:shape="oval">
-            <corners android:radius="60dp"/>
-            <size android:width="4dp" android:height="4dp" />
-            <solid android:color="#80FFFFFF" />
-        </shape>
+        <inset android:insetLeft="4dp" android:insetRight="4dp">
+            <shape android:shape="oval">
+                <corners android:radius="60dp" />
+                <size android:width="8dp" android:height="8dp" />
+                <solid android:color="#80222222" />
+            </shape>
+        </inset>
     </item>
 </selector>
