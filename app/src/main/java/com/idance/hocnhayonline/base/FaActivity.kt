@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.transition.Explode
 import android.transition.Fade
+import android.transition.Slide
+import android.transition.Visibility
+import android.view.Gravity
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
@@ -21,8 +24,8 @@ abstract class FaActivity : AppCompatActivity() {
         with(window) {
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
             // Set an exit transition
-            exitTransition = Explode()
-            enterTransition = Fade()
+            exitTransition = Slide(Gravity.END)
+            enterTransition = Slide(Gravity.START)
         }
         faBinding = ActivityFaBinding.inflate(layoutInflater)
         binding = getBindingView()

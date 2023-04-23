@@ -1,12 +1,14 @@
 package com.idance.hocnhayonline
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.transition.Slide
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.facebook.AccessToken
@@ -237,6 +239,7 @@ class MainActivity : BaseActivity() {
 
     fun addFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
+            .setCustomAnimations( R.animator.slide_up, 0, 0, R.animator.slide_down)
             .add(R.id.main_container, fragment)
             .addToBackStack(null)
             .commit()

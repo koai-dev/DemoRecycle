@@ -21,10 +21,6 @@ import com.idance.hocnhayonline.home.viewmodel.HomeViewModel
 import com.idance.hocnhayonline.search.SearchFragment
 import com.koaidev.idancesdk.model.LatestMoviesItem
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -57,7 +53,6 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
             binding.pointTop.layoutParams = paramsTop
             insets.consumeSystemWindowInsets()
         }
-        setCallback()
         setTopicList()
         setSlide()
         setDiscover()
@@ -67,7 +62,7 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
         setClickListener()
     }
 
-    private fun setClickListener(){
+    private fun setClickListener() {
         binding.txtSearch.setOnClickListener {
             activity.addFragment(SearchFragment())
         }
@@ -77,9 +72,6 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
         binding.btnSeeMoreCourse.setOnClickListener {
             activity.tabCourseClick()
         }
-    }
-    private fun setCallback() {
-        LatestSingleAdapter.callback = this
     }
 
     private fun setSlide() {
@@ -107,7 +99,7 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
                             }
                         }
                     }
-                },3000)
+                }, 3000)
             }
         })
     }
@@ -126,6 +118,7 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
 
     private fun setTopicList() {
         lastedUnitAdapter = LatestSingleAdapter(homeViewModel, activity)
+        lastedUnitAdapter.callback = this
         binding.rcvLastedUnit.adapter = lastedUnitAdapter
         binding.rcvLastedUnit.layoutManager =
             object : LinearLayoutManager(requireContext(), VERTICAL, false) {

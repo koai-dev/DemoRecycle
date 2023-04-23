@@ -9,7 +9,10 @@
 package com.idance.hocnhayonline.home.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
@@ -21,6 +24,8 @@ import com.idance.hocnhayonline.databinding.ItemLatestSingleBinding
 import com.idance.hocnhayonline.databinding.ItemMoreBinding
 import com.idance.hocnhayonline.home.viewmodel.HomeViewModel
 import com.koaidev.idancesdk.model.LatestMoviesItem
+import java.util.Random
+
 
 class LastSingleUnitComparator : DiffUtil.ItemCallback<LatestMoviesItem>() {
     override fun areItemsTheSame(oldItem: LatestMoviesItem, newItem: LatestMoviesItem): Boolean =
@@ -38,11 +43,33 @@ class LatestSingleAdapter(
     companion object {
         const val TYPE_SINGLE = 0
         const val TYPE_MORE = 1
-        lateinit var callback: Callback
     }
+
+    private var lastPosition = -1
+    lateinit var callback: Callback
+
 
     interface Callback {
         fun onItemSingleClick(latestMoviesItem: LatestMoviesItem)
+    }
+
+    private fun setAnimation(viewToAnimate: View, position: Int) {
+        if (position > lastPosition) {
+            val anim = ScaleAnimation(
+                0.0f,
+                1.0f,
+                0.0f,
+                1.0f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f
+            )
+            anim.duration = 200
+//                Random().nextInt(501).toLong() //to make duration random number between [0,501)
+            viewToAnimate.startAnimation(anim)
+            lastPosition = position
+        }
     }
 
     class LatestSingleVH(val binding: ItemLatestSingleBinding) : ViewHolder(binding.root)
@@ -88,6 +115,7 @@ class LatestSingleAdapter(
             holder.binding.executePendingBindings()
         } else {
             holder as LatestSingleVH
+            setAnimation(holder.binding.root, position)
             holder.binding.movie = getItem(position)
             holder.binding.position = position
             holder.binding.txtTitle.isSelected = true
