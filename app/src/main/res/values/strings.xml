@@ -34,4 +34,7 @@
     <string name="action">Năng động</string>
     <string name="txt_guide_search">Tìm kiếm bài nhảy đơn, khóa học và hơn thế nữa...</string>
     <string name="txt_list_course">Danh sách khóa học</string>
+    <string name="disconnect_network">Mất kết nối mạng!</string>
+    <string name="notify_disconnect_network">Bạn đang offline. Vui lòng kiểm tra lại kết nối.</string>
+    <string name="retry">Thử lại</string>
 </resources>
