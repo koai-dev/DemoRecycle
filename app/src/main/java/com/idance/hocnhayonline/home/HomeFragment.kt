@@ -25,8 +25,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.Timer
-import java.util.TimerTask
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -65,6 +63,7 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
         setTopicList()
         getData()
         observer()
+        setSwipeRefresh()
         setClickListener()
     }
 
@@ -94,7 +93,7 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
                 positionOffsetPixels: Int
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                if (isCounting){
+                if (isCounting) {
                     isCounting = false
                     CoroutineScope(Dispatchers.Main).launch {
                         delay(3000)
@@ -155,21 +154,30 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
         homeViewModel.getHomeContent()
     }
 
+    private fun setSwipeRefresh() {
+        binding.swipeLayout.setOnRefreshListener {
+            getData()
+        }
+    }
+
     private fun observer() {
         homeViewModel.listSlide.observe(activity) {
             if (!it.isNullOrEmpty()) {
                 slideAdapter.submitList(it)
             }
+            binding.swipeLayout.isRefreshing = false
         }
         homeViewModel.listLastSingleUnit.observe(activity) {
             if (!it.isNullOrEmpty()) {
                 lastedUnitAdapter.submitList(it)
             }
+            binding.swipeLayout.isRefreshing = false
         }
         homeViewModel.listLastSeries.observe(activity) {
             if (!it.isNullOrEmpty()) {
                 lastedCourseAdapter.submitList(it)
             }
+            binding.swipeLayout.isRefreshing = false
         }
     }
 

@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/btn_oldest_sort"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_txt_menu"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_sort_by_newest" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/btn_max_view_sort"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_txt_menu"
@@ -58,9 +58,10 @@
         android:text="Theo lượt xem nhiều nhất"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_oldest_sort" />
 
     <TextView
+        android:id="@+id/btn_price_sort"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_txt_menu"
@@ -71,5 +72,5 @@
         android:text="Theo giá thành từ thấp lên cao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_max_view_sort" />
 </androidx.constraintlayout.widget.ConstraintLayout>

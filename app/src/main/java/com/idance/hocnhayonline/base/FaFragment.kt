@@ -39,4 +39,7 @@ abstract class FaFragment : Fragment() {
 
     abstract fun initView(savedInstanceState: Bundle?, binding: ViewBinding)
 
+    fun showProgressbar(visible: Boolean){
+        faBinding.progressBar.visibility = if (visible) View.VISIBLE else View.GONE
+    }
 }

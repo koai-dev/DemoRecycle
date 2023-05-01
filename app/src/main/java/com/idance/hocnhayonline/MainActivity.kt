@@ -1,6 +1,7 @@
 package com.idance.hocnhayonline
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -46,6 +47,7 @@ class MainActivity : BaseActivity() {
     lateinit var loginCallBack: LoginUtils.LoginCallBack
     lateinit var oneTapClient: SignInClient
     private var countLoginClick = 0
+    private var mLastClickTime = 0L
 
     val registerForActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
@@ -228,6 +230,10 @@ class MainActivity : BaseActivity() {
     }
 
     private fun tabProfileClick() {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+            return
+        }
+        mLastClickTime = SystemClock.elapsedRealtime()
         if (AccountUtil.isLogin()) {
             binding.pagerMain.currentItem = 4
         } else {
@@ -236,14 +242,26 @@ class MainActivity : BaseActivity() {
     }
 
     fun tabHomeClick() {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+            return
+        }
+        mLastClickTime = SystemClock.elapsedRealtime()
         binding.pagerMain.currentItem = 0
     }
 
     fun tabSingleClick() {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+            return
+        }
+        mLastClickTime = SystemClock.elapsedRealtime()
         binding.pagerMain.currentItem = 1
     }
 
     fun tabCourseClick() {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+            return
+        }
+        mLastClickTime = SystemClock.elapsedRealtime()
         binding.pagerMain.currentItem = 2
     }
 
