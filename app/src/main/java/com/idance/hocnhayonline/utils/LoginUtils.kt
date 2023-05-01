@@ -51,7 +51,11 @@ object LoginUtils {
             .addFormDataPart(Constants.PARAM_EMAIL, email)
             .addFormDataPart(Constants.PARAM_PASSWORD, password)
 
-        ApiController.getService().signup(fields.build()).enqueue(object : Callback<User> {
+        ApiController.getService().signup(
+            apiKey = AppConfigUtil.appConfig.apiKey,
+            authorization = AppConfigUtil.appConfig.authorization,
+            fields.build()
+        ).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful && response.body()?.status == "success") {
                     saveUserEmailAndPassword(context, email, password)
@@ -73,7 +77,11 @@ object LoginUtils {
         val fields = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart(Constants.PARAM_EMAIL, email)
             .addFormDataPart(Constants.PARAM_PASSWORD, password)
-        ApiController.getService().login(fields.build()).enqueue(object : Callback<User> {
+        ApiController.getService().login(
+            apiKey = AppConfigUtil.appConfig.apiKey,
+            authorization = AppConfigUtil.appConfig.authorization,
+            fields.build()
+        ).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful && response.body()?.status == "success") {
                     saveUserEmailAndPassword(context, email, password)
@@ -98,7 +106,11 @@ object LoginUtils {
             .addFormDataPart(Constants.PARAM_EMAIL, email ?: "")
             .addFormDataPart(Constants.PARAM_UID, uid)
             .addFormDataPart(Constants.PARAM_PHONE, phone ?: "")
-        ApiController.getService().firebaseAuth(fields.build()).enqueue(object : Callback<User> {
+        ApiController.getService().firebaseAuth(
+            apiKey = AppConfigUtil.appConfig.apiKey,
+            authorization = AppConfigUtil.appConfig.authorization,
+            requestBody = fields.build()
+        ).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful && response.body()?.status == "success") {
                     saveUserUid(context, uid)
@@ -127,22 +139,13 @@ object LoginUtils {
         registerForActivityResultLauncher: ActivityResultLauncher<IntentSenderRequest>,
         loginCallBack: LoginCallBack
     ) {
-        val signInRequest = BeginSignInRequest.builder()
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest
-                    .GoogleIdTokenRequestOptions
-                    .builder()
-                    .setSupported(true)
+        val signInRequest = BeginSignInRequest.builder().setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder().setSupported(true)
                     .setServerClientId(Const.SERVER_CLIENT_ID).setFilterByAuthorizedAccounts(false)
                     .build()
-            )
-            .setPasswordRequestOptions(
-                BeginSignInRequest.PasswordRequestOptions.builder()
-                    .setSupported(true)
-                    .build()
-            )
-            .setAutoSelectEnabled(false)
-            .build()
+            ).setPasswordRequestOptions(
+                BeginSignInRequest.PasswordRequestOptions.builder().setSupported(true).build()
+            ).setAutoSelectEnabled(false).build()
 
         oneTapClient.beginSignIn(signInRequest).addOnCompleteListener {
             if (it.isSuccessful) {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+
+    <entry>
+        <key>api_key</key>
+        <value />
+    </entry>
+    <entry>
+        <key>authorization</key>
+        <value />
+    </entry>
+</defaultsMap>

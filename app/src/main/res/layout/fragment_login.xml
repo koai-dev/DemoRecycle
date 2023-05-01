@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="@id/point_top"
         app:tint="@color/white" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -77,12 +77,14 @@
 
 
                 <EditText
-                    android:id="@+id/edt_email"
+                    android:id="@+id/edt_name_login"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:background="@android:color/transparent"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                     android:gravity="center_vertical"
+                    android:inputType="textFilter"
                     android:hint="@string/name_login"
                     android:imeOptions="flagNoExtractUi"
                     android:maxLength="50"
@@ -273,5 +275,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/layoutOr" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

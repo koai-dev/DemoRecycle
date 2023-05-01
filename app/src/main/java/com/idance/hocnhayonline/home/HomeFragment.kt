@@ -21,6 +21,12 @@ import com.idance.hocnhayonline.home.viewmodel.HomeViewModel
 import com.idance.hocnhayonline.search.SearchFragment
 import com.koaidev.idancesdk.model.LatestMoviesItem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.Timer
+import java.util.TimerTask
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -80,6 +86,7 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
         TabLayoutMediator(
             binding.slideTabLayout, binding.slidePager
         ) { _, _ -> }.attach()
+        var isCounting = true
         binding.slidePager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
@@ -87,19 +94,25 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
                 positionOffsetPixels: Int
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                binding.root.postDelayed({
-                    if (slideAdapter.itemCount > 0) {
-                        if (position < slideAdapter.itemCount - 1) {
-                            activity.runOnUiThread {
-                                binding.slidePager.currentItem += 1
-                            }
-                        } else {
-                            activity.runOnUiThread {
-                                binding.slidePager.currentItem = 0
+                if (isCounting){
+                    isCounting = false
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(3000)
+                        if (slideAdapter.itemCount > 0) {
+                            if (position < slideAdapter.itemCount - 1) {
+                                activity.runOnUiThread {
+                                    binding.slidePager.currentItem += 1
+                                }
+                            } else {
+                                activity.runOnUiThread {
+                                    binding.slidePager.currentItem = 0
+                                }
                             }
                         }
+                    }.invokeOnCompletion {
+                        isCounting = true
                     }
-                }, 3000)
+                }
             }
         })
     }

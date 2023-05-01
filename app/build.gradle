@@ -32,10 +32,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            debuggable true
         }
     }
     compileOptions {
@@ -53,6 +52,10 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.5"
+    }
+
+    lintOptions {
+        checkDependencies true
     }
 }
 kapt {
@@ -91,9 +94,9 @@ dependencies {
 
     implementation 'io.supercharge:shimmerlayout:2.1.0'
 
-    implementation "androidx.media3:media3-exoplayer:1.0.0"
-    implementation "androidx.media3:media3-ui:1.0.0"
-    implementation "androidx.media3:media3-exoplayer-dash:1.0.0"
+    implementation "androidx.media3:media3-exoplayer:1.0.1"
+    implementation "androidx.media3:media3-ui:1.0.1"
+    implementation "androidx.media3:media3-exoplayer-dash:1.0.1"
 
     implementation 'com.google.dagger:hilt-android:2.45'
     kapt 'com.google.dagger:hilt-compiler:2.45'
@@ -124,14 +127,14 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:16.0.1'
 
     //jetpack compose
-    implementation 'androidx.compose:compose-bom:2023.04.00'
-    androidTestImplementation 'androidx.compose:compose-bom:2023.04.00'
+    implementation 'androidx.compose:compose-bom:2023.04.01'
+    androidTestImplementation 'androidx.compose:compose-bom:2023.04.01'
     implementation 'androidx.compose.material3:material3:1.0.1'
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.4.1'
-    debugImplementation 'androidx.compose.ui:ui-test-manifest:1.4.1'
-    implementation 'androidx.compose.ui:ui-tooling-preview:1.4.1'
-    debugImplementation 'androidx.compose.ui:ui-tooling:1.4.1'
-    implementation 'androidx.activity:activity-compose:1.7.0'
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.4.2'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest:1.4.2'
+    implementation 'androidx.compose.ui:ui-tooling-preview:1.4.2'
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.4.2'
+    implementation 'androidx.activity:activity-compose:1.7.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
-    implementation 'androidx.compose.runtime:runtime-livedata:1.4.1'
+    implementation 'androidx.compose.runtime:runtime-livedata:1.4.2'
 }

@@ -37,4 +37,5 @@
     <string name="disconnect_network">Mất kết nối mạng!</string>
     <string name="notify_disconnect_network">Bạn đang offline. Vui lòng kiểm tra lại kết nối.</string>
     <string name="retry">Thử lại</string>
+    <string name="full_name">Họ và tên</string>
 </resources>

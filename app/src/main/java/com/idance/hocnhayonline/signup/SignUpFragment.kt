@@ -2,6 +2,7 @@ package com.idance.hocnhayonline.signup
 
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
@@ -37,6 +38,18 @@ class SignUpFragment : BaseFragment() {
 
     private fun setClick() {
         binding.btnRegister.setOnClickListener {
+            var email = binding.edtNameLogin.text.trim().toString()
+            val password = binding.edtPassword.text.trim().toString()
+            if (email.isEmpty()) {
+                Toast.makeText(activity, "Bạn cần nhập tên đăng nhập.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else if (password.isEmpty()) {
+                Toast.makeText(activity, "Bạn cần nhập mật khẩu.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (!email.contains("@")) {
+                email = "$email@gmail.com"
+            }
             LoginUtils.signUp(activity,
                 "Khánh",
                 "dtakotesstaa12@gmail.com",

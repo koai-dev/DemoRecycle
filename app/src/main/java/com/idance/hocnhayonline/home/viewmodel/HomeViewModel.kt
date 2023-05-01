@@ -3,6 +3,7 @@ package com.idance.hocnhayonline.home.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.idance.hocnhayonline.utils.AppConfigUtil
 import com.koaidev.idancesdk.model.AllCountryItem
 import com.koaidev.idancesdk.model.AllGenreItem
 import com.koaidev.idancesdk.model.HomeContent
@@ -32,23 +33,31 @@ class HomeViewModel @Inject constructor() : ViewModel() {
 
     fun getHomeContent() {
         viewModelScope.launch {
-            ApiController.getService().getHomeContent().enqueue(object : Callback<HomeContent> {
-                override fun onResponse(call: Call<HomeContent>, response: Response<HomeContent>) {
-                    if (response.isSuccessful) {
-                        listSlide.postValue(response.body()?.slider?.slide)
-                        listLastSingleUnit.postValue(response.body()?.latestMovies)
-                        listLevel.postValue(response.body()?.allCountry)
-                        listCategory.postValue(response.body()?.allGenre)
-                        listTeacher.postValue(response.body()?.popularStars)
-                        listLastSeries.postValue(response.body()?.latestTvseries)
+            ApiController.getService()
+                .getHomeContent(
+                    apiKey = AppConfigUtil.appConfig.apiKey,
+                    authorization = AppConfigUtil.appConfig.authorization
+                )
+                .enqueue(object : Callback<HomeContent> {
+                    override fun onResponse(
+                        call: Call<HomeContent>,
+                        response: Response<HomeContent>
+                    ) {
+                        if (response.isSuccessful) {
+                            listSlide.postValue(response.body()?.slider?.slide)
+                            listLastSingleUnit.postValue(response.body()?.latestMovies)
+                            listLevel.postValue(response.body()?.allCountry)
+                            listCategory.postValue(response.body()?.allGenre)
+                            listTeacher.postValue(response.body()?.popularStars)
+                            listLastSeries.postValue(response.body()?.latestTvseries)
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<HomeContent>, t: Throwable) {
+                    override fun onFailure(call: Call<HomeContent>, t: Throwable) {
 
-                }
+                    }
 
-            })
+                })
         }
     }
 }

@@ -41,9 +41,8 @@ class LoginFragment : BaseFragment(), LoginUtils.LoginCallBack {
 
         //init user for begin
         val currentUser = LoginUtils.getOldUserEmailAndPassword(activity)
-        currentUser?.email?.let { binding.edtEmail.setText(currentUser.email) }
+        currentUser?.email?.let { binding.edtNameLogin.setText(currentUser.email) }
         currentUser?.password?.let { binding.edtPassword.setText(currentUser.password) }
-
         setClickListener()
     }
 
@@ -62,6 +61,26 @@ class LoginFragment : BaseFragment(), LoginUtils.LoginCallBack {
                 activity.oneTapClient,
                 activity.registerForActivityResultLauncher,
                 activity.loginCallBack
+            )
+        }
+        binding.btnLogin.setOnClickListener {
+            var email = binding.edtNameLogin.text.trim().toString()
+            val password = binding.edtPassword.text.trim().toString()
+            if (email.isEmpty()) {
+                Toast.makeText(activity, "Bạn cần nhập tên đăng nhập.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else if (password.isEmpty()) {
+                Toast.makeText(activity, "Bạn cần nhập mật khẩu.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (!email.contains("@")) {
+                email = "$email@gmail.com"
+            }
+            LoginUtils.login(
+                activity,
+                email = email,
+                password = password,
+                this
             )
         }
     }

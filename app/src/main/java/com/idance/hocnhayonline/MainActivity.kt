@@ -1,14 +1,12 @@
 package com.idance.hocnhayonline
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.transition.Slide
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.facebook.AccessToken
@@ -27,6 +25,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.idance.hocnhayonline.base.BaseActivity
 import com.idance.hocnhayonline.databinding.ActivityMainBinding
+import com.idance.hocnhayonline.utils.AppConfigUtil
 import com.idance.hocnhayonline.utils.LoginUtils
 import com.idance.hocnhayonline.welcome.WelcomeLoginFragment
 import com.koaidev.idancesdk.AccountUtil
@@ -50,46 +49,55 @@ class MainActivity : BaseActivity() {
 
     val registerForActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            countLoginClick+=1
+            countLoginClick += 1
             try {
                 if (it?.data != null) {
                     val credential = oneTapClient.getSignInCredentialFromIntent(it.data)
                     val idToken = credential.googleIdToken
-                    Firebase.auth.signInWithCredential(
-                        GoogleAuthProvider.getCredential(
-                            idToken,
-                            null
+                    if (idToken != null) {
+                        Firebase.auth.signInWithCredential(
+                            GoogleAuthProvider.getCredential(
+                                idToken,
+                                null
+                            )
                         )
-                    )
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                val uid = task.result.user?.uid
-                                val phone = task.result.user?.phoneNumber
-                                val email = task.result.user?.email
-                                if (uid != null) {
-                                    LoginUtils.authFirebase(this, uid, email, phone, loginCallBack)
-                                }
-                            } else {
-                                loginCallBack.onLoginFail(
-                                    User(
-                                        message = task.exception?.message ?: "Unknown Error."
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val uid = task.result.user?.uid
+                                    val phone = task.result.user?.phoneNumber
+                                    val email = task.result.user?.email
+                                    if (uid != null) {
+                                        LoginUtils.authFirebase(
+                                            this,
+                                            uid,
+                                            email,
+                                            phone,
+                                            loginCallBack
+                                        )
+                                    }
+                                } else {
+                                    loginCallBack.onLoginFail(
+                                        User(
+                                            message = task.exception?.message ?: "Unknown Error."
+                                        )
                                     )
-                                )
+                                }
                             }
-                        }
+                    }
                 }
             } catch (e: ApiException) {
                 e.printStackTrace()
-                when(e.statusCode){
-                    CommonStatusCodes.CANCELED -> if (countLoginClick==2){
+                when (e.statusCode) {
+                    CommonStatusCodes.CANCELED -> if (countLoginClick == 2) {
                         loginCallBack.onLoginFail(
                             User(
-                                message = "Too many action cancel to login."))
+                                message = "Too many action cancel to login."
+                            )
+                        )
                     }
                 }
             }
         }
-
 
     override fun getBindingView(): ViewBinding = ActivityMainBinding.inflate(layoutInflater)
 
@@ -205,16 +213,18 @@ class MainActivity : BaseActivity() {
 
         })
 
-        ApiController.getService().config().enqueue(object : Callback<Config> {
-            override fun onResponse(call: Call<Config>, response: Response<Config>) {
-                print(response.body())
-            }
+        ApiController.getService()
+            .config(apiKey = AppConfigUtil.appConfig.apiKey, AppConfigUtil.appConfig.authorization)
+            .enqueue(object : Callback<Config> {
+                override fun onResponse(call: Call<Config>, response: Response<Config>) {
+                    print(response.body())
+                }
 
-            override fun onFailure(call: Call<Config>, t: Throwable) {
+                override fun onFailure(call: Call<Config>, t: Throwable) {
 
-            }
+                }
 
-        })
+            })
     }
 
     private fun tabProfileClick() {
@@ -225,21 +235,21 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun tabHomeClick(){
+    fun tabHomeClick() {
         binding.pagerMain.currentItem = 0
     }
 
-    fun tabSingleClick(){
+    fun tabSingleClick() {
         binding.pagerMain.currentItem = 1
     }
 
-    fun tabCourseClick(){
+    fun tabCourseClick() {
         binding.pagerMain.currentItem = 2
     }
 
     fun addFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .setCustomAnimations( R.animator.slide_up, 0, 0, R.animator.slide_down)
+            .setCustomAnimations(R.animator.slide_up, 0, 0, R.animator.slide_down)
             .add(R.id.main_container, fragment)
             .addToBackStack(null)
             .commit()
