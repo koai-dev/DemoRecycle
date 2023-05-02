@@ -1,20 +1,14 @@
 package com.idance.hocnhayonline.splash
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
-import android.view.WindowManager
 import androidx.viewbinding.ViewBinding
-import com.idance.hocnhayonline.MainActivity
+import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.base.BaseActivity
 import com.idance.hocnhayonline.databinding.ActivitySplashBinding
 import com.idance.hocnhayonline.utils.LoginUtils
 import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.User
-import java.security.MessageDigest
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity() {

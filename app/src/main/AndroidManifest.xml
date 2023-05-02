@@ -80,7 +80,7 @@
             android:screenOrientation="sensor" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize|stateVisible"
             android:screenOrientation="sensorPortrait"
