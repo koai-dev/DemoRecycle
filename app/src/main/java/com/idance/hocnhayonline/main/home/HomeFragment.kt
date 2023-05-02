@@ -14,11 +14,13 @@ import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentHomeBinding
+import com.idance.hocnhayonline.main.detail.DetailFragment
 import com.idance.hocnhayonline.main.home.adapter.CourseAdapter
 import com.idance.hocnhayonline.main.home.adapter.LatestSingleAdapter
 import com.idance.hocnhayonline.main.home.adapter.SlideAdapter
 import com.idance.hocnhayonline.main.home.viewmodel.HomeViewModel
 import com.idance.hocnhayonline.main.search.SearchFragment
+import com.idance.hocnhayonline.utils.Constants
 import com.koaidev.idancesdk.model.LatestMoviesItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -182,7 +184,8 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
     }
 
     override fun onItemSingleClick(latestMoviesItem: LatestMoviesItem) {
-        Toast.makeText(activity, "Bạn đang xem ${latestMoviesItem.title}", Toast.LENGTH_SHORT)
-            .show()
+        activity.addFragment(DetailFragment().apply { arguments = Bundle().apply {
+            putInt(Constants.VIDEO_ID, latestMoviesItem.videosId?.toInt()?:0)
+        } })
     }
 }
