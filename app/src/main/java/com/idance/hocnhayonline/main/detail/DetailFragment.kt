@@ -9,15 +9,19 @@ import androidx.viewbinding.ViewBinding
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentDetailBinding
+import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.main.detail.viewmodel.DetailViewModel
 import com.idance.hocnhayonline.utils.Constants
 import com.koaidev.idancesdk.AccountUtil
-import com.koaidev.idancesdk.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailFragment : BaseFragment() {
     private lateinit var binding: FragmentDetailBinding
-    @Inject lateinit var detailViewModel: DetailViewModel
+
+    @Inject
+    lateinit var detailViewModel: DetailViewModel
     private lateinit var activity: MainActivity
     override fun getBindingView(container: ViewGroup?): ViewBinding =
         DataBindingUtil.inflate(layoutInflater, R.layout.fragment_detail, container, false)
@@ -42,14 +46,15 @@ class DetailFragment : BaseFragment() {
         observer()
     }
 
-    private fun getDetail(){
+    private fun getDetail() {
         val videoId = arguments?.getInt(Constants.VIDEO_ID)
         detailViewModel.getDetail(videoId.toString(), AccountUtil.getUser().userId)
     }
 
-    private fun observer(){
-        detailViewModel.detail.observe(activity){
+    private fun observer() {
+        detailViewModel.detail.observe(activity) {
             binding.detail = it
         }
+        binding.hasFavorite = AccountUtil.isLogin()
     }
 }

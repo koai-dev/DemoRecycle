@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -15,7 +16,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/bg_app_black"
+        android:clickable="true"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/point_top"
@@ -30,20 +34,35 @@
             thumb="@{detail.thumbnailUrl}"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@color/start_gradient_orange_button"
+            android:scaleType="centerCrop"
+            android:src="@color/color_50_white"
             app:layout_constraintDimensionRatio="375:300"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/imageView4"
             android:layout_width="56dp"
             android:layout_height="56dp"
+            android:clickable="true"
+            android:focusable="true"
             android:src="@drawable/ic_btn_play"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/point_top" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/watch_trailer"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/imageView4"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -58,6 +77,7 @@
             app:layout_constraintTop_toBottomOf="@+id/shapeableImageView2">
 
             <TextView
+                android:id="@+id/textView5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -73,16 +93,239 @@
 
             <ImageView
                 android:id="@+id/imageView3"
+                hasFavorite="@{hasFavorite??false, default=true}"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="16dp"
-                android:background="@drawable/bg_btn_circle"
-                android:backgroundTint="@color/white"
-                android:checked="@{hasFavorite, default=true}"
+                android:background="@drawable/bg_btn_circle_white"
+                android:clickable="true"
+                android:focusable="true"
                 android:padding="10dp"
                 android:src="@drawable/ic_detail_heart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="8dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text='@{detail.release, default=5.0}'
+                android:textColor="@color/color_50_white"
+                android:textSize="13sp"
+                app:drawableLeftCompat="@drawable/ic_star"
+                app:layout_constraintStart_toStartOf="@id/textView5"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#DBE3FF"
+                            android:text="@string/young"
+                            android:textColor="#88A4E8"
+                            app:chipCornerRadius="60dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#DBE3FF"
+                            android:text="@string/action"
+                            android:textColor="#88A4E8"
+                            app:chipCornerRadius="60dp" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_learn_now"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:backgroundTint="@color/start_gradient_orange_button"
+                        android:text="@string/learn_now"
+                        app:icon="@drawable/ic_btn_play"
+                        app:iconGravity="end"
+                        app:iconTint="@null"
+                        app:layout_constraintBottom_toBottomOf="@+id/tag"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tag"
+                        app:strokeColor="@color/white"
+                        app:strokeWidth="1dp" />
+
+                    <LinearLayout
+                        android:id="@+id/container_length_and_teacher"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        app:layout_constraintEnd_toStartOf="@+id/textView6"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tag">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/textView10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="16dp"
+                                android:text="@string/length"
+                                android:textColor="@color/color_50_white"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="@{detail.runtime,default=132}"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="@id/textView10"
+                                app:layout_constraintTop_toBottomOf="@id/textView10" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/textView11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="16dp"
+                                android:text="@string/teacher"
+                                android:textColor="@color/color_50_white"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="@{detail.director[0]??detail.writer[0], default=LanT}"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="@id/textView11"
+                                app:layout_constraintTop_toBottomOf="@id/textView11" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/release_date"
+                        android:textColor="@color/color_50_white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/btn_learn_now"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_learn_now" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{detail.release, default=2022}"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@id/textView6"
+                        app:layout_constraintTop_toBottomOf="@id/textView6" />
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="@string/description"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/container_length_and_teacher" />
+
+                    <TextView
+                        android:id="@+id/txt_description"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="@{detail.description,default=VoHoang}"
+                        android:textColor="@color/color_50_white"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textView12" />
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="@string/comments"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txt_description" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_see_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="-8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="-8dp"
+                        android:backgroundTint="@android:color/transparent"
+                        android:text="@string/see_more"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView14"
+                        app:strokeColor="@color/white"
+                        app:strokeWidth="1dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_comment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_see_more"
+                        tools:listitem="@layout/item_comment" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

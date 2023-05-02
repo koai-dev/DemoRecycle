@@ -38,4 +38,13 @@
     <string name="notify_disconnect_network">Bạn đang offline. Vui lòng kiểm tra lại kết nối.</string>
     <string name="retry">Thử lại</string>
     <string name="full_name">Họ và tên</string>
+    <string name="watch_trailer">Xem thử</string>
+    <string name="learn_now">Học Ngay</string>
+    <string name="length">Thời lượng</string>
+    <string name="release_date">Ngày phát hành</string>
+    <string name="teacher">Giáo viên</string>
+    <string name="description">Mô tả</string>
+    <string name="comments">Bình luận</string>
+    <string name="see_more">Xem thêm</string>
+    <string name="reply">Trả lời</string>
 </resources>
