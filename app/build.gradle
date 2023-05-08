@@ -6,16 +6,19 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
     id 'kotlin-parcelize'
+    id 'com.google.firebase.firebase-perf'
 }
 
 android {
     namespace 'com.idance.hocnhayonline'
     compileSdk 33
+//    compileSdk "UpsideDownCake"
 
     defaultConfig {
         applicationId "com.idance.hocnhayonline"
         minSdk 24
         targetSdk 33
+//        targetSdkPreview "UpsideDownCake"
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -51,7 +54,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.5"
+        kotlinCompilerExtensionVersion = "1.4.7"
     }
     lint {
         checkDependencies true
@@ -65,12 +68,14 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.annotation:annotation:1.6.0'
     //noinspection GradlePath
     implementation files('libs/IDance_SDK.aar')
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
+    implementation 'com.google.firebase:firebase-perf-ktx:20.3.2'
+    implementation 'com.google.firebase:firebase-dynamic-links-ktx:21.1.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -114,7 +119,7 @@ dependencies {
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.20'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.21'
 
     implementation 'com.airbnb.android:lottie:6.0.0'
     implementation 'com.google.j2objc:j2objc-annotations:2.8'

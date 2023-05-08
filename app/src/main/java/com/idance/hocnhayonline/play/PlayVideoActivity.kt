@@ -2,42 +2,109 @@ package com.idance.hocnhayonline.play
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.SystemClock
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.databinding.DataBindingUtil
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.viewbinding.ViewBinding
+import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.base.BaseActivity
 import com.idance.hocnhayonline.databinding.ActivityPlayVideoBinding
+import com.idance.hocnhayonline.databinding.CustomPlayerControllerBinding
+import com.idance.hocnhayonline.play.viewmodel.PlayViewModel
+import com.idance.hocnhayonline.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PlayVideoActivity : BaseActivity() {
     private lateinit var binding: ActivityPlayVideoBinding
+    private lateinit var controllerBinding: CustomPlayerControllerBinding
     private lateinit var player: ExoPlayer
     private var playWhenReady = true
     private var currentItem = 0
     private var playbackPosition = 0L
-    override fun getBindingView(): ViewBinding = ActivityPlayVideoBinding.inflate(layoutInflater)
 
+    @Inject
+    lateinit var playViewModel: PlayViewModel
+    private var urlVideo: String? = null
+    private var mLastClickTime = 0L
+
+    override fun getBindingView(): ViewBinding =
+        DataBindingUtil.inflate(layoutInflater, R.layout.activity_play_video, null, false)
+
+    @SuppressLint("CutPasteId")
     override fun initView(savedInstanceState: Bundle?, binding: ViewBinding) {
         super.initView(savedInstanceState, binding)
         this.binding = binding as ActivityPlayVideoBinding
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val paramsTop =
+                findViewById<TextView>(R.id.point_top).layoutParams as ViewGroup.MarginLayoutParams
+            paramsTop.setMargins(
+                0,
+                insets.getInsets(WindowInsetsCompat.Type.systemBars()).top,
+                0,
+                0
+            )
+            findViewById<TextView>(R.id.point_top).layoutParams = paramsTop
+            insets.consumeSystemWindowInsets()
+        }
+        controllerBinding = CustomPlayerControllerBinding.inflate(layoutInflater)
+        urlVideo = intent.getBundleExtra(Constants.BUNDLE)?.getString(Constants.VIDEO_URL)
+        observer()
+        setClick()
 
-        initPlayer()
     }
 
-    private fun initPlayer() {
+    @SuppressLint("UnsafeOptInUsageError")
+    private fun initPlayer(url: String, hasMirror: Boolean) {
         player = ExoPlayer.Builder(this).build().also {
-            binding.videoView.player = it
-            val mediaItem = MediaItem.fromUri("https://firebasestorage.googleapis.com/v0/b/testvideo-d2076.appspot.com/o/TH%C6%AF%C6%A0NG%20EM%20H%C6%A0N%20CH%C3%8DNH%20ANH%20%5BOFFICIAL%20MV%20FULL%5D%20-%20JUN%20PH%E1%BA%A0M.mp4?alt=media&token=9399a62f-4fbf-4a8c-8fd9-f23257eda5ee")
+            if (hasMirror) {
+                binding.videoViewMirror.setPlayer(it)
+            } else {
+                binding.videoView.setPlayer(it)
+            }
+            val mediaItem =
+                MediaItem.fromUri(url)
             it.setMediaItem(mediaItem)
             it.playWhenReady = playWhenReady
             it.seekTo(currentItem, playbackPosition)
             it.prepare()
         }
+    }
 
+    private fun observer() {
+        playViewModel.playbackPosition.observe(this) {
+            playbackPosition = it
+        }
+        playViewModel.hasMirror.observe(this) {
+            binding.hasMirroring = it
+            initPlayer(urlVideo!!, it)
+        }
+    }
+
+    private fun setClick() {
+       findViewById<ImageButton>(R.id.btn_mirror).setOnClickListener {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                return@setOnClickListener
+            }
+            mLastClickTime = SystemClock.elapsedRealtime()
+            releasePlayer()
+            playViewModel.hasMirror.postValue(!playViewModel.hasMirror.value!!)
+        }
+        binding.videoViewMirror.setOnClickListener {
+            binding.hasShowMirror = binding.videoViewMirror.controller?.isFullyVisible
+        }
+        binding.videoView.setOnClickListener {
+            binding.hasShowMirror = binding.videoView.controller?.isFullyVisible
+        }
     }
 
     override fun onStop() {
@@ -49,10 +116,12 @@ class PlayVideoActivity : BaseActivity() {
         player.let { exoPlayer ->
             playbackPosition = exoPlayer.currentPosition
             currentItem = exoPlayer.currentMediaItemIndex
+            playViewModel.playbackPosition.postValue(exoPlayer.currentPosition)
             playWhenReady = exoPlayer.playWhenReady
             exoPlayer.release()
         }
     }
+
 
     @SuppressLint("InlinedApi")
     private fun hideSystemUi() {

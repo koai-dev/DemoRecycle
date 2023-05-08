@@ -1,18 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.media3.ui.PlayerView
-        android:id="@+id/video_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleX="-1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:surface_type="texture_view" />
+    <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+            name="hasMirroring"
+            type="Boolean" />
+
+        <variable
+            name="hasShowMirror"
+            type="Boolean" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.idance.hocnhayonline.customView.player.PlayerView
+            android:id="@+id/video_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:animateLayoutChanges="false"
+            android:visibility="@{!hasMirroring?View.VISIBLE: View.GONE}"
+            app:auto_show="true"
+            app:controller_layout_id="@layout/custom_player_controller"
+            app:default_artwork="@drawable/ic_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:surface_type="texture_view"
+            app:use_controller="true" />
+
+        <com.idance.hocnhayonline.customView.player.PlayerView
+            android:id="@+id/video_view_mirror"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:animateLayoutChanges="false"
+            android:scaleX="-1"
+            android:visibility="@{hasMirroring?View.VISIBLE: View.GONE}"
+            app:auto_show="true"
+            app:default_artwork="@drawable/ic_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:surface_type="texture_view"
+            app:use_controller="true" />
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/btn_mirror"-->
+<!--            android:layout_width="48dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:layout_margin="16dp"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:src="@drawable/ic_mirror"-->
+<!--            android:visibility="@{hasShowMirror?View.GONE: View.VISIBLE}"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@id/point_top" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.idance.hocnhayonline.databinding.ActivityFaBinding
+import com.idance.hocnhayonline.utils.Constants
 import com.idance.hocnhayonline.utils.NetworkUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,7 +59,7 @@ abstract class FaActivity : AppCompatActivity() {
     fun openActivity(activity: Class<*>, canBack: Boolean = true, bundle: Bundle? = null) {
         val intent = Intent(this, activity)
         if (bundle != null) {
-            intent.putExtra("bundle", bundle)
+            intent.putExtra(Constants.BUNDLE, bundle)
         }
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         if (!canBack) {

@@ -11,8 +11,10 @@ import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentDetailBinding
 import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.main.detail.viewmodel.DetailViewModel
+import com.idance.hocnhayonline.play.PlayVideoActivity
 import com.idance.hocnhayonline.utils.Constants
 import com.koaidev.idancesdk.AccountUtil
+import com.koaidev.idancesdk.model.SingleDetailsMovie
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,6 +25,7 @@ class DetailFragment : BaseFragment() {
     @Inject
     lateinit var detailViewModel: DetailViewModel
     private lateinit var activity: MainActivity
+    private var singleDetailsMovie: SingleDetailsMovie? = null
     override fun getBindingView(container: ViewGroup?): ViewBinding =
         DataBindingUtil.inflate(layoutInflater, R.layout.fragment_detail, container, false)
 
@@ -44,6 +47,7 @@ class DetailFragment : BaseFragment() {
         activity = requireActivity() as MainActivity
         getDetail()
         observer()
+        setOnClick()
     }
 
     private fun getDetail() {
@@ -54,7 +58,26 @@ class DetailFragment : BaseFragment() {
     private fun observer() {
         detailViewModel.detail.observe(activity) {
             binding.detail = it
+            singleDetailsMovie = it
         }
         binding.hasFavorite = AccountUtil.isLogin()
+    }
+
+    private fun setOnClick() {
+        binding.btnLearnNow.setOnClickListener {
+            if (singleDetailsMovie != null && singleDetailsMovie?.videos?.isNotEmpty() == true && singleDetailsMovie?.videos?.get(
+                    0
+                ) != null
+            ) {
+                activity.openActivity(
+                    PlayVideoActivity::class.java,
+                    bundle = Bundle().apply {
+                        putString(
+                            Constants.VIDEO_URL,
+                            singleDetailsMovie?.videos?.get(0)?.fileUrl
+                        )
+                    })
+            }
+        }
     }
 }

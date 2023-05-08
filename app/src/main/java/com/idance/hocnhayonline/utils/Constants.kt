@@ -10,5 +10,7 @@ class Constants {
         const val API_KEY = "api_key"
         const val AUTHORIZATION = "authorization"
         const val VIDEO_ID = "video_id"
+        const val VIDEO_URL = "video_url"
+        const val BUNDLE = "bundle"
     }
 }
