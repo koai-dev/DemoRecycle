@@ -3,9 +3,7 @@ package com.idance.hocnhayonline.play
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.SystemClock
-import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,7 +15,6 @@ import androidx.viewbinding.ViewBinding
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.base.BaseActivity
 import com.idance.hocnhayonline.databinding.ActivityPlayVideoBinding
-import com.idance.hocnhayonline.databinding.CustomPlayerControllerBinding
 import com.idance.hocnhayonline.play.viewmodel.PlayViewModel
 import com.idance.hocnhayonline.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +23,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PlayVideoActivity : BaseActivity() {
     private lateinit var binding: ActivityPlayVideoBinding
-    private lateinit var controllerBinding: CustomPlayerControllerBinding
     private lateinit var player: ExoPlayer
     private var playWhenReady = true
     private var currentItem = 0
@@ -45,22 +41,31 @@ class PlayVideoActivity : BaseActivity() {
         super.initView(savedInstanceState, binding)
         this.binding = binding as ActivityPlayVideoBinding
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            val paramsTop =
-                findViewById<TextView>(R.id.point_top).layoutParams as ViewGroup.MarginLayoutParams
-            paramsTop.setMargins(
-                0,
-                insets.getInsets(WindowInsetsCompat.Type.systemBars()).top,
-                0,
-                0
-            )
-            findViewById<TextView>(R.id.point_top).layoutParams = paramsTop
+//            val paramsTop =
+//                findViewById<TextView>(R.id.point_top).layoutParams as ViewGroup.MarginLayoutParams
+//            paramsTop.setMargins(
+//                0,
+//                insets.getInsets(WindowInsetsCompat.Type.systemBars()).top,
+//                0,
+//                0
+//            )
+//            findViewById<TextView>(R.id.point_top).layoutParams = paramsTop
+
+//            val paramsTop2 =
+//                findViewById<TextView>(R.id.point_top2).layoutParams as ViewGroup.MarginLayoutParams
+//            paramsTop2.setMargins(
+//                0,
+//                insets.getInsets(WindowInsetsCompat.Type.systemBars()).top,
+//                0,
+//                0
+//            )
+//            findViewById<TextView>(R.id.point_top2).layoutParams = paramsTop2
             insets.consumeSystemWindowInsets()
         }
-        controllerBinding = CustomPlayerControllerBinding.inflate(layoutInflater)
+
         urlVideo = intent.getBundleExtra(Constants.BUNDLE)?.getString(Constants.VIDEO_URL)
         observer()
         setClick()
-
     }
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -91,7 +96,16 @@ class PlayVideoActivity : BaseActivity() {
     }
 
     private fun setClick() {
-       findViewById<ImageButton>(R.id.btn_mirror).setOnClickListener {
+        findViewById<ImageButton>(R.id.btn_mirror).setOnClickListener {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                return@setOnClickListener
+            }
+            mLastClickTime = SystemClock.elapsedRealtime()
+            releasePlayer()
+            playViewModel.hasMirror.postValue(!playViewModel.hasMirror.value!!)
+        }
+
+        findViewById<ImageButton>(R.id.btn_mirror2).setOnClickListener {
             if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
                 return@setOnClickListener
             }
@@ -121,7 +135,6 @@ class PlayVideoActivity : BaseActivity() {
             exoPlayer.release()
         }
     }
-
 
     @SuppressLint("InlinedApi")
     private fun hideSystemUi() {

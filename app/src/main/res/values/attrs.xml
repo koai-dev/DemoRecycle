@@ -5,4 +5,7 @@
         <attr name="realtimeDownSampleFactor" format="float" />
         <attr name="realtimeOverlayColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="PlayerView">
+        <attr name="hasMirror" format="boolean"/>
+    </declare-styleable>
 </resources>

@@ -27,6 +27,7 @@
 
     <FrameLayout android:id="@id/exo_bottom_bar"
         android:layout_width="match_parent"
+        android:scaleX="-1"
         android:layout_height="@dimen/exo_styled_bottom_bar_height"
         android:layout_marginTop="@dimen/exo_styled_bottom_bar_margin_top"
         android:layout_gravity="bottom"
@@ -105,12 +106,14 @@
 
     <View android:id="@id/exo_progress_placeholder"
         android:layout_width="match_parent"
+        android:scaleX="-1"
         android:layout_height="@dimen/exo_styled_progress_layout_height"
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/exo_styled_progress_margin_bottom"/>
 
     <LinearLayout android:id="@id/exo_minimal_controls"
         android:layout_width="wrap_content"
+        android:scaleX="-1"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/exo_styled_minimal_controls_margin_bottom"
@@ -127,6 +130,7 @@
         android:id="@id/exo_center_controls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleX="-1"
         android:layout_gravity="center"
         android:background="@android:color/transparent"
         android:gravity="center"
@@ -143,7 +147,7 @@
             style="@style/ExoStyledControls.Button.Center.PlayPause"/>
 
         <ImageButton
-            android:id="@+id/btn_mirror"
+            android:id="@+id/btn_mirror2"
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:layout_margin="16dp"
