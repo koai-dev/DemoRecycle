@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.databinding.ItemMovieVerticalBinding
 import com.koaidev.idancesdk.model.Movie
+import com.koaidev.idancesdk.model.SlideItem
 import javax.inject.Inject
 
 class MovieComparator : DiffUtil.ItemCallback<Movie>() {
@@ -23,6 +24,10 @@ class MovieComparator : DiffUtil.ItemCallback<Movie>() {
 class SingleUnitAdapter @Inject constructor() : ListAdapter<Movie, SingleUnitAdapter.SingleVH>(
     MovieComparator()
 ) {
+    interface Callback{
+        fun onClickItem(movie: Movie)
+    }
+    var callback : Callback? = null
     class SingleVH(val binding: ItemMovieVerticalBinding) : ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleVH {
@@ -39,7 +44,7 @@ class SingleUnitAdapter @Inject constructor() : ListAdapter<Movie, SingleUnitAda
     override fun onBindViewHolder(holder: SingleVH, position: Int) {
         holder.binding.movie = getItem(position)
         holder.binding.root.setOnClickListener {
-
+            callback?.onClickItem(getItem(position))
         }
         holder.binding.executePendingBindings()
     }

@@ -22,6 +22,7 @@ import com.idance.hocnhayonline.main.home.viewmodel.HomeViewModel
 import com.idance.hocnhayonline.main.search.SearchFragment
 import com.idance.hocnhayonline.utils.Constants
 import com.koaidev.idancesdk.model.LatestMoviesItem
+import com.koaidev.idancesdk.model.SlideItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -83,7 +84,15 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
 
     private fun setSlide() {
         slideAdapter = SlideAdapter()
+        slideAdapter.callback = object: SlideAdapter.Callback{
+            override fun onClickSlideItem(slideItem: SlideItem) {
+                activity.addFragment(DetailFragment().apply { arguments = Bundle().apply {
+                    putInt(Constants.VIDEO_ID, slideItem.id?.toInt()?:0)
+                } })
+            }
+        }
         binding.slidePager.adapter = slideAdapter
+
         TabLayoutMediator(
             binding.slideTabLayout, binding.slidePager
         ) { _, _ -> }.attach()

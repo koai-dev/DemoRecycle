@@ -40,28 +40,6 @@ class PlayVideoActivity : BaseActivity() {
     override fun initView(savedInstanceState: Bundle?, binding: ViewBinding) {
         super.initView(savedInstanceState, binding)
         this.binding = binding as ActivityPlayVideoBinding
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-//            val paramsTop =
-//                findViewById<TextView>(R.id.point_top).layoutParams as ViewGroup.MarginLayoutParams
-//            paramsTop.setMargins(
-//                0,
-//                insets.getInsets(WindowInsetsCompat.Type.systemBars()).top,
-//                0,
-//                0
-//            )
-//            findViewById<TextView>(R.id.point_top).layoutParams = paramsTop
-
-//            val paramsTop2 =
-//                findViewById<TextView>(R.id.point_top2).layoutParams as ViewGroup.MarginLayoutParams
-//            paramsTop2.setMargins(
-//                0,
-//                insets.getInsets(WindowInsetsCompat.Type.systemBars()).top,
-//                0,
-//                0
-//            )
-//            findViewById<TextView>(R.id.point_top2).layoutParams = paramsTop2
-            insets.consumeSystemWindowInsets()
-        }
 
         urlVideo = intent.getBundleExtra(Constants.BUNDLE)?.getString(Constants.VIDEO_URL)
         observer()

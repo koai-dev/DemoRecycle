@@ -15,8 +15,10 @@ import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.customView.widgets.EndlessRecyclerViewScrollListener
 import com.idance.hocnhayonline.databinding.FragmentSingleUnitBinding
 import com.idance.hocnhayonline.databinding.MenuSortBinding
+import com.idance.hocnhayonline.main.detail.DetailFragment
 import com.idance.hocnhayonline.main.singleUnit.adapter.SingleUnitAdapter
 import com.idance.hocnhayonline.main.singleUnit.viewmodel.SingleViewModel
+import com.idance.hocnhayonline.utils.Constants
 import com.koaidev.idancesdk.model.Movie
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -64,6 +66,14 @@ class SingleUnitFragment : BaseFragment() {
     }
 
     private fun setMovieAdapter() {
+        adapter.callback = object : SingleUnitAdapter.Callback{
+            override fun onClickItem(movie: Movie) {
+                activity.addFragment(DetailFragment().apply { arguments = Bundle().apply {
+                    putInt(Constants.VIDEO_ID, movie.videosId?.toInt()?:0)
+                } })
+            }
+
+        }
         binding.rcvMovieSingle.adapter = adapter
     }
 
