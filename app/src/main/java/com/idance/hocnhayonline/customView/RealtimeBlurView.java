@@ -18,7 +18,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.idance.hocnhayonline.BuildConfig;
+import androidx.multidex.BuildConfig;
+
 import com.idance.hocnhayonline.R;
 
 
@@ -65,7 +66,7 @@ public class RealtimeBlurView extends View {
         }
     }
 
-    public float getBlurRadius(){
+    public float getBlurRadius() {
         return mBlurRadius;
     }
 
@@ -82,7 +83,7 @@ public class RealtimeBlurView extends View {
         }
     }
 
-    public float getDownsampleFactor(){
+    public float getDownsampleFactor() {
         return mDownsampleFactor;
     }
 

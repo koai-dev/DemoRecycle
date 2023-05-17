@@ -1,14 +1,15 @@
 package com.idance.hocnhayonline
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.idance.hocnhayonline.utils.AppConfig
 import com.idance.hocnhayonline.utils.AppConfigUtil
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MyApplication : Application() {
+class MyApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         AppConfigUtil.appConfig = AppConfig()
+
     }
 }

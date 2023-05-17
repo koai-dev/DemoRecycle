@@ -2,7 +2,6 @@ package com.idance.hocnhayonline.main.home
 
 import android.os.Bundle
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
@@ -10,10 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayoutMediator
-import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentHomeBinding
+import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.main.detail.DetailFragment
 import com.idance.hocnhayonline.main.home.adapter.CourseAdapter
 import com.idance.hocnhayonline.main.home.adapter.LatestSingleAdapter
@@ -58,7 +57,7 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
                 0
             )
             binding.pointTop.layoutParams = paramsTop
-            insets.consumeSystemWindowInsets()
+            insets
         }
         setTopicList()
         setSlide()

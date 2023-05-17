@@ -33,7 +33,7 @@ class PersonFragment : BaseFragment() {
                 0
             )
             binding.pointTop.layoutParams = paramsTop
-            insets.consumeSystemWindowInsets()
+            insets
         }
 
         activity = requireActivity() as MainActivity

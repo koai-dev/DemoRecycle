@@ -36,7 +36,7 @@ class LoginFragment : BaseFragment(), LoginUtils.LoginCallBack {
                 0
             )
             binding.pointTop.layoutParams = paramsTop
-            insets.consumeSystemWindowInsets()
+            insets
         }
 
         //init user for begin
