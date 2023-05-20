@@ -13,9 +13,7 @@ import androidx.viewbinding.ViewBinding
 import com.idance.hocnhayonline.databinding.ActivityFaBinding
 import com.idance.hocnhayonline.utils.Constants
 import com.idance.hocnhayonline.utils.NetworkUtil
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 abstract class FaActivity : AppCompatActivity() {
     private var binding: ViewBinding? = null
     private lateinit var faBinding: ActivityFaBinding

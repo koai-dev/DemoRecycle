@@ -16,9 +16,8 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel : ViewModel() {
     val showFullListSingle = MutableLiveData<Boolean>()
     val listSlide = MutableLiveData<List<SlideItem?>?>()
     val listLastSingleUnit = MutableLiveData<List<LatestMoviesItem?>?>()

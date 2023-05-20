@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.base.BaseFragment
@@ -15,14 +16,10 @@ import com.idance.hocnhayonline.play.PlayVideoActivity
 import com.idance.hocnhayonline.utils.Constants
 import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.SingleDetailsMovie
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class DetailFragment : BaseFragment() {
     private lateinit var binding: FragmentDetailBinding
 
-    @Inject
     lateinit var detailViewModel: DetailViewModel
     private lateinit var activity: MainActivity
     private var singleDetailsMovie: SingleDetailsMovie? = null
@@ -45,6 +42,7 @@ class DetailFragment : BaseFragment() {
             insets
         }
         activity = requireActivity() as MainActivity
+        detailViewModel = ViewModelProvider(activity)[DetailViewModel::class.java]
         getDetail()
         observer()
         setOnClick()

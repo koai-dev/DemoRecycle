@@ -7,9 +7,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentShortBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class CommunityFragment : BaseFragment() {
     private lateinit var binding: FragmentShortBinding
     override fun getBindingView(): ViewBinding = FragmentShortBinding.inflate(layoutInflater)

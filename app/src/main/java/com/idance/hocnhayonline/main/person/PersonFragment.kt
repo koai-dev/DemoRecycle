@@ -6,14 +6,12 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
-import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentPersonalBinding
+import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.utils.LoginUtils
 import com.koaidev.idancesdk.AccountUtil
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class PersonFragment : BaseFragment() {
     private lateinit var binding: FragmentPersonalBinding
     private lateinit var activity: MainActivity

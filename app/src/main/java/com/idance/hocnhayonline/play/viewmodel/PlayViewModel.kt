@@ -2,9 +2,8 @@ package com.idance.hocnhayonline.play.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import javax.inject.Inject
 
-class PlayViewModel @Inject constructor() : ViewModel() {
+class PlayViewModel : ViewModel() {
     val playbackPosition = MutableLiveData<Long>()
     val hasMirror = MutableLiveData<Boolean>()
 

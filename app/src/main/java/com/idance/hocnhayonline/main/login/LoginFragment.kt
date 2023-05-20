@@ -6,16 +6,14 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
-import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentLoginBinding
+import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.main.signup.SignUpFragment
 import com.idance.hocnhayonline.utils.LoginUtils
 import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.User
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class LoginFragment : BaseFragment(), LoginUtils.LoginCallBack {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var activity: MainActivity

@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.databinding.ItemMovieVerticalBinding
 import com.koaidev.idancesdk.model.Movie
-import com.koaidev.idancesdk.model.SlideItem
-import javax.inject.Inject
 
 class MovieComparator : DiffUtil.ItemCallback<Movie>() {
     override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
@@ -21,13 +19,15 @@ class MovieComparator : DiffUtil.ItemCallback<Movie>() {
 
 }
 
-class SingleUnitAdapter @Inject constructor() : ListAdapter<Movie, SingleUnitAdapter.SingleVH>(
+class SingleUnitAdapter : ListAdapter<Movie, SingleUnitAdapter.SingleVH>(
     MovieComparator()
 ) {
-    interface Callback{
+    interface Callback {
         fun onClickItem(movie: Movie)
     }
-    var callback : Callback? = null
+
+    var callback: Callback? = null
+
     class SingleVH(val binding: ItemMovieVerticalBinding) : ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleVH {

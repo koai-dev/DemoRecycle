@@ -10,9 +10,8 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
-class DetailViewModel @Inject constructor() : ViewModel() {
+class DetailViewModel : ViewModel() {
     val detail = MutableLiveData<SingleDetailsMovie?>()
     fun getDetail(videoId: String, userId: String?) {
         viewModelScope.launch {

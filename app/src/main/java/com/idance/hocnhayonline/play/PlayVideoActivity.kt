@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.SystemClock
 import android.widget.ImageButton
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.viewbinding.ViewBinding
@@ -17,10 +17,7 @@ import com.idance.hocnhayonline.base.BaseActivity
 import com.idance.hocnhayonline.databinding.ActivityPlayVideoBinding
 import com.idance.hocnhayonline.play.viewmodel.PlayViewModel
 import com.idance.hocnhayonline.utils.Constants
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class PlayVideoActivity : BaseActivity() {
     private lateinit var binding: ActivityPlayVideoBinding
     private lateinit var player: ExoPlayer
@@ -28,7 +25,6 @@ class PlayVideoActivity : BaseActivity() {
     private var currentItem = 0
     private var playbackPosition = 0L
 
-    @Inject
     lateinit var playViewModel: PlayViewModel
     private var urlVideo: String? = null
     private var mLastClickTime = 0L
@@ -40,7 +36,7 @@ class PlayVideoActivity : BaseActivity() {
     override fun initView(savedInstanceState: Bundle?, binding: ViewBinding) {
         super.initView(savedInstanceState, binding)
         this.binding = binding as ActivityPlayVideoBinding
-
+        playViewModel = ViewModelProvider(this)[PlayViewModel::class.java]
         urlVideo = intent.getBundleExtra(Constants.BUNDLE)?.getString(Constants.VIDEO_URL)
         observer()
         setClick()

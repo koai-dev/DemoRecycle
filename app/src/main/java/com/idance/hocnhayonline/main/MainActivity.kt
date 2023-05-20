@@ -27,19 +27,17 @@ import com.google.firebase.ktx.Firebase
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.base.BaseActivity
 import com.idance.hocnhayonline.databinding.ActivityMainBinding
+import com.idance.hocnhayonline.main.welcome.WelcomeLoginFragment
 import com.idance.hocnhayonline.utils.AppConfigUtil
 import com.idance.hocnhayonline.utils.LoginUtils
-import com.idance.hocnhayonline.main.welcome.WelcomeLoginFragment
 import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.Config
 import com.koaidev.idancesdk.model.User
 import com.koaidev.idancesdk.service.ApiController
-import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-@AndroidEntryPoint
 class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainPagerAdapter: MainPagerAdapter

@@ -1,36 +1,36 @@
 package com.idance.hocnhayonline.main.singleUnit
 
+import android.accounts.Account
 import android.app.Dialog
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.customView.widgets.EndlessRecyclerViewScrollListener
 import com.idance.hocnhayonline.databinding.FragmentSingleUnitBinding
 import com.idance.hocnhayonline.databinding.MenuSortBinding
+import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.main.detail.DetailFragment
+import com.idance.hocnhayonline.main.detail.viewmodel.DetailViewModel
 import com.idance.hocnhayonline.main.singleUnit.adapter.SingleUnitAdapter
 import com.idance.hocnhayonline.main.singleUnit.viewmodel.SingleViewModel
+import com.idance.hocnhayonline.play.PlayVideoActivity
 import com.idance.hocnhayonline.utils.Constants
+import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.Movie
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class SingleUnitFragment : BaseFragment() {
     private lateinit var binding: FragmentSingleUnitBinding
 
-    @Inject
     lateinit var adapter: SingleUnitAdapter
 
-    @Inject
     lateinit var singleViewModel: SingleViewModel
     private lateinit var activity: MainActivity
     private var nextPage = 1
@@ -57,6 +57,7 @@ class SingleUnitFragment : BaseFragment() {
         }
 
         activity = requireActivity() as MainActivity
+        singleViewModel = ViewModelProvider(activity)[SingleViewModel::class.java]
 
         setMovieAdapter()
         getData(nextPage)
@@ -66,11 +67,14 @@ class SingleUnitFragment : BaseFragment() {
     }
 
     private fun setMovieAdapter() {
-        adapter.callback = object : SingleUnitAdapter.Callback{
+        adapter = SingleUnitAdapter()
+        adapter.callback = object : SingleUnitAdapter.Callback {
             override fun onClickItem(movie: Movie) {
-                activity.addFragment(DetailFragment().apply { arguments = Bundle().apply {
-                    putInt(Constants.VIDEO_ID, movie.videosId?.toInt()?:0)
-                } })
+                activity.addFragment(DetailFragment().apply {
+                    arguments = Bundle().apply {
+                        putInt(Constants.VIDEO_ID, movie.videosId?.toInt() ?: 0)
+                    }
+                })
             }
 
         }

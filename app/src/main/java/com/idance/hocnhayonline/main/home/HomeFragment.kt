@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -14,22 +15,22 @@ import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentHomeBinding
 import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.main.detail.DetailFragment
+import com.idance.hocnhayonline.main.detail.viewmodel.DetailViewModel
 import com.idance.hocnhayonline.main.home.adapter.CourseAdapter
 import com.idance.hocnhayonline.main.home.adapter.LatestSingleAdapter
 import com.idance.hocnhayonline.main.home.adapter.SlideAdapter
 import com.idance.hocnhayonline.main.home.viewmodel.HomeViewModel
 import com.idance.hocnhayonline.main.search.SearchFragment
+import com.idance.hocnhayonline.play.PlayVideoActivity
 import com.idance.hocnhayonline.utils.Constants
+import com.koaidev.idancesdk.AccountUtil
 import com.koaidev.idancesdk.model.LatestMoviesItem
 import com.koaidev.idancesdk.model.SlideItem
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var slideAdapter: SlideAdapter
@@ -37,7 +38,7 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
     private lateinit var lastedCourseAdapter: CourseAdapter
     private lateinit var activity: MainActivity
 
-    @Inject
+
     lateinit var homeViewModel: HomeViewModel
     override fun getBindingView(container: ViewGroup?): ViewBinding {
         return DataBindingUtil.inflate(layoutInflater, R.layout.fragment_home, container, false)
@@ -59,6 +60,8 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
             binding.pointTop.layoutParams = paramsTop
             insets
         }
+        homeViewModel = ViewModelProvider(activity)[HomeViewModel::class.java]
+
         setTopicList()
         setSlide()
         setDiscover()
@@ -83,11 +86,13 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
 
     private fun setSlide() {
         slideAdapter = SlideAdapter()
-        slideAdapter.callback = object: SlideAdapter.Callback{
+        slideAdapter.callback = object : SlideAdapter.Callback {
             override fun onClickSlideItem(slideItem: SlideItem) {
-                activity.addFragment(DetailFragment().apply { arguments = Bundle().apply {
-                    putInt(Constants.VIDEO_ID, slideItem.id?.toInt()?:0)
-                } })
+                activity.addFragment(DetailFragment().apply {
+                    arguments = Bundle().apply {
+                        putInt(Constants.VIDEO_ID, slideItem.id?.toInt() ?: 0)
+                    }
+                })
             }
         }
         binding.slidePager.adapter = slideAdapter
@@ -192,8 +197,10 @@ class HomeFragment : BaseFragment(), LatestSingleAdapter.Callback {
     }
 
     override fun onItemSingleClick(latestMoviesItem: LatestMoviesItem) {
-        activity.addFragment(DetailFragment().apply { arguments = Bundle().apply {
-            putInt(Constants.VIDEO_ID, latestMoviesItem.videosId?.toInt()?:0)
-        } })
+        activity.addFragment(DetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt(Constants.VIDEO_ID, latestMoviesItem.videosId?.toInt() ?: 0)
+            }
+        })
     }
 }

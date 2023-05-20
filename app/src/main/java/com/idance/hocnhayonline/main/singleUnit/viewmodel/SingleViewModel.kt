@@ -10,9 +10,8 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
-class SingleViewModel @Inject constructor() : ViewModel() {
+class SingleViewModel : ViewModel() {
     val listSingleUnit = MutableLiveData<MutableList<Movie>?>()
     fun getListSingleUnit(pageNo: Int) {
         viewModelScope.launch {
@@ -20,14 +19,14 @@ class SingleViewModel @Inject constructor() : ViewModel() {
                 apiKey = AppConfigUtil.appConfig.apiKey,
                 authorization = AppConfigUtil.appConfig.authorization,
                 pageNo.toString()
-            ).enqueue(object : Callback<MutableList<Movie>>{
+            ).enqueue(object : Callback<MutableList<Movie>> {
                 override fun onResponse(
                     call: Call<MutableList<Movie>>,
                     response: Response<MutableList<Movie>>
                 ) {
-                    if (response.isSuccessful && response.body()?.isNotEmpty()==true){
+                    if (response.isSuccessful && response.body()?.isNotEmpty() == true) {
                         listSingleUnit.postValue(response.body())
-                    }else{
+                    } else {
                         listSingleUnit.postValue(null)
                     }
                 }

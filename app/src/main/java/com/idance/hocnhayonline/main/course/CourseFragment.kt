@@ -6,27 +6,25 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.R
 import com.idance.hocnhayonline.base.BaseFragment
-import com.idance.hocnhayonline.main.course.viewmodel.CourseViewModel
 import com.idance.hocnhayonline.customView.widgets.EndlessRecyclerViewScrollListener
 import com.idance.hocnhayonline.databinding.FragmentCourseBinding
 import com.idance.hocnhayonline.databinding.MenuSortBinding
+import com.idance.hocnhayonline.main.MainActivity
+import com.idance.hocnhayonline.main.course.viewmodel.CourseViewModel
 import com.idance.hocnhayonline.main.singleUnit.adapter.SingleUnitAdapter
 import com.koaidev.idancesdk.model.Movie
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class CourseFragment : BaseFragment() {
     private lateinit var binding: FragmentCourseBinding
-    @Inject
+
     lateinit var adapter: SingleUnitAdapter
-    @Inject
+
     lateinit var courseViewModel: CourseViewModel
     private lateinit var activity: MainActivity
     private var nextPage = 1
@@ -51,7 +49,7 @@ class CourseFragment : BaseFragment() {
         }
 
         activity = requireActivity() as MainActivity
-
+        courseViewModel = ViewModelProvider(activity)[CourseViewModel::class.java]
         setMovieAdapter()
         getData(nextPage)
         setClickListener()
@@ -60,6 +58,7 @@ class CourseFragment : BaseFragment() {
     }
 
     private fun setMovieAdapter() {
+        adapter = SingleUnitAdapter()
         binding.rcvMovieSingle.adapter = adapter
     }
 

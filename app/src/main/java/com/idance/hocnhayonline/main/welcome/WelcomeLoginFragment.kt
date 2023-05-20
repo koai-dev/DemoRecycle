@@ -5,13 +5,11 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
-import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.base.BaseFragment
 import com.idance.hocnhayonline.databinding.FragmentWelcomeLoginBinding
+import com.idance.hocnhayonline.main.MainActivity
 import com.idance.hocnhayonline.main.login.LoginFragment
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class WelcomeLoginFragment : BaseFragment() {
     private lateinit var binding: FragmentWelcomeLoginBinding
     override fun getBindingView(): ViewBinding = FragmentWelcomeLoginBinding.inflate(layoutInflater)
@@ -35,7 +33,7 @@ class WelcomeLoginFragment : BaseFragment() {
         setClickListener()
     }
 
-    private fun setClickListener(){
+    private fun setClickListener() {
         binding.btnAgree.setOnClickListener {
             (requireActivity() as MainActivity).addFragment(LoginFragment())
         }
